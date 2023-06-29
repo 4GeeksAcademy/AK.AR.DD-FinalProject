@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { Login } from "../component/login.jsx";
 import { Signup } from "../component/signup.jsx";
 
@@ -24,24 +24,24 @@ export const Navbar = () => {
   const handleSignupModalShow = () => setShowSignupModal(true);
 
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar">
       <div className="container">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1">YOUR NOMAD GUIDE</span>
+        <Link to="/" className="navbar-brand">
+          <span className="navbar-brand-text">YOUR NOMAD GUIDE</span>
         </Link>
         <div className="ml-auto">
           {store.auth === true ? (
-            <button className="btn btn-primary" onClick={() => handleLogout()}>
+            <button className="btn btn-logout" onClick={() => handleLogout()}>
               Logout
             </button>
           ) : (
             <>
-              <Button variant="primary" onClick={handleLoginModalShow}>
+              <button className="btn btn-login" onClick={handleLoginModalShow}>
                 Login
-              </Button>
-              <Button variant="success" onClick={handleSignupModalShow}>
-                Signup
-              </Button>
+              </button>
+              <button className="btn btn-signup" onClick={handleSignupModalShow}>
+                Sign Up
+              </button>
             </>
           )}
         </div>
@@ -50,7 +50,7 @@ export const Navbar = () => {
       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={handleLoginModalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
+          <Modal.Title className="modal-title">Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Login handleClose={handleLoginModalClose} />
@@ -60,7 +60,7 @@ export const Navbar = () => {
       {/* Signup Modal */}
       <Modal show={showSignupModal} onHide={handleSignupModalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Signup</Modal.Title>
+          <Modal.Title className="modal-title">Sign Up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Signup handleClose={handleSignupModalClose} />
@@ -69,5 +69,3 @@ export const Navbar = () => {
     </nav>
   );
 };
-
-

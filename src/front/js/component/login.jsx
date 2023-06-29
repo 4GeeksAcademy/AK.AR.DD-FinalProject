@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import { Navigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
+import { ForgotPassword } from "./forgot-password.jsx";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { actions, store } = useContext(Context);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   function sendData(e) {
     e.preventDefault();
@@ -14,6 +15,10 @@ export const Login = () => {
     console.log(email, password);
     actions.login(email, password);
   }
+
+  const handleForgotPasswordClick = () => {
+    setShowForgotPassword(true);
+  };
 
   return (
     <>
@@ -50,7 +55,15 @@ export const Login = () => {
               Log In
             </button>
           </div>
+          <div className="col-12">
+            <Link to="#" onClick={handleForgotPasswordClick}>
+              Forgot your password?
+            </Link>
+          </div>
         </form>
+      )}
+      {showForgotPassword && (
+        <ForgotPassword handleClose={() => setShowForgotPassword(false)} />
       )}
     </>
   );
