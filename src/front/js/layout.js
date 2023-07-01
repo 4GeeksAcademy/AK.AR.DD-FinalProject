@@ -6,6 +6,9 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { Admin } from "./pages/admin";
+import { OneCountry } from "./pages/onecountry";
+import { City } from "./pages/city";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -27,7 +30,11 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<Admin />} path="/admin" />
+                        <Route element={<City />} path="/city" />
+                        <Route element={<OneCountry />} path="/onecountry" />
                         <Route element={<Single />} path="/single/:theid" />
+
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
