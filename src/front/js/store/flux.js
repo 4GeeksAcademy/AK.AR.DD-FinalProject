@@ -456,15 +456,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		},
   
-		// loadCitiesByCountry: async (countryName) => {
-		// 	try {
-		// 	  const response = await fetch(`https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/cities/${countryName}`);
-		// 	  const data = await response.json();
-		// 	  setStore({ cities: data.countries[0].cities }); // Actualiza el estado 'cities' con los datos recibidos
-		// 	} catch (error) {
-		// 	  console.error("Error loading cities:", error);
-		// 	}
-		//   }
+	
 		  
 		loadCitiesByCountry: async (countryName) => {
 			try {
