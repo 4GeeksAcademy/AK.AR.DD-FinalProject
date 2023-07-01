@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Navigate, Link } from "react-router-dom";
-import { ForgotPassword } from "./forgot-password.jsx";
+import { ForgotPassword } from "./forgot-password.js";
 
 export const Login = () => {
   const [email, setEmail] = useState("");

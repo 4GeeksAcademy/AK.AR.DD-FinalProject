@@ -1,4 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
+
 	return {
 		store: {
 			message: null,
@@ -28,10 +29,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem("token");
 			},
 
-			login: (email,password) => {
+			login: async (email,password) => {
 				const requestOptions = {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json'},
+					mode:"no-cors",
+					credentials: "include",
 					body: JSON.stringify(
 					{
 						"email":email,
@@ -41,7 +44,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				fetch("https://deborahdobles-animated-xylophone-66jp7rjp4p5c4rvp-3001.preview.app.github.dev/api/login", requestOptions)
 					.then(response => { 
-						console.log(response.status)
+						console.log(response)
 						if (response.status == 200){
 							setStore({auth: true})
 						}
