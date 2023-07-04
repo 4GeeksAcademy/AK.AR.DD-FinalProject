@@ -1,19 +1,21 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import { Navigate, Link } from "react-router-dom";
-import { ForgotPassword } from "./forgot-password.js";
+import { useNavigate, Link } from "react-router-dom";
+import { ForgotPassword } from "./forgot-password.jsx";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { actions, store } = useContext(Context);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const navigate = useNavigate();
 
   function sendData(e) {
     e.preventDefault();
     console.log("send Data");
     console.log(email, password);
     actions.login(email, password);
+    navigate("/demo"); 
   }
 
   const handleForgotPasswordClick = () => {
@@ -23,9 +25,9 @@ export const Login = () => {
   return (
     <>
       {store.auth ? (
-        <Navigate to="/demo" />
+        navigate("/demo")
       ) : (
-        <form className="row g-3" onSubmit={sendData}>
+        <form className="container mt-3" onSubmit={sendData}>
           <div className="col-md-6">
             <label htmlFor="inputEmail4" className="form-label">
               Email
@@ -51,11 +53,11 @@ export const Login = () => {
             />
           </div>
           <div className="col-12">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary mt-3">
               Log In
             </button>
           </div>
-          <div className="col-12">
+          <div className="col-12 mt-3">
             <Link to="#" onClick={handleForgotPasswordClick}>
               Forgot your password?
             </Link>

@@ -1,3 +1,4 @@
+const apiURL = "https://deborahdobles-animated-xylophone-66jp7rjp4p5c4rvp-3001.preview.app.github.dev"
 const getState = ({ getStore, getActions, setStore }) => {
 
 	return {
@@ -29,35 +30,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem("token");
 			},
 
-			login: async (email,password) => {
-				const requestOptions = {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json'},
-					mode:"no-cors",
-					credentials: "include",
-					body: JSON.stringify(
-					{
-						"email":email,
-						"password":password
-					}
-					)
-				};
-				fetch("https://deborahdobles-animated-xylophone-66jp7rjp4p5c4rvp-3001.preview.app.github.dev/api/login", requestOptions)
-					.then(response => { 
-						console.log(response)
-						if (response.status == 200){
-							setStore({auth: true})
+			login: async (email, password) => {
+				try{
+					const requestOptions = {
+
+						method: 'POST',
+						headers: { 
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'},
+						// mode:"no-cors",
+						// credentials: "include",
+						body: JSON.stringify(
+						{
+							"email":email,
+							"password":password
 						}
-						return response.json()
-					})
-					.then(data => {
-						localStorage.setItem("token", data.access_token);
-						console.log(data)
-					});
+						)
+					};
+					await fetch(apiURL + '/api/login', requestOptions)
+						.then(response => { 
+							console.log(response)
+							if (response.status == 200){
+								setStore({auth: true})
+							}
+							return response.json()
+						})
+						.then(data => {
+							localStorage.setItem("token", data.access_token);
+							console.log(data)
+							return data
+						})
+
+						// .catch(error =>  console.error(error));
+					}catch (error){
+						return error.response;
+					}
 			},
 
 			signup: (fullname, email, password, nationality, description) => {
 				const requestOptions = {
+
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json'},
 					body: JSON.stringify(
@@ -70,19 +82,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 					)
 				};
-				fetch("https://deborahdobles-animated-xylophone-66jp7rjp4p5c4rvp-3001.preview.app.github.dev/api/signup", requestOptions)
-					.then(response => { 
+				fetch(apiURL + '/api/signup', requestOptions)
+				.then(response => { 
+
 						console.log(response.status)
 						if (response.status == 200){
-							setStore({auth: true})
+							console.log(response)
 						}
 						return response.json()
 					})
 					.then(data => {
-						localStorage.setItem("token", data.access_token);
-						console.log(data)
-					});
-			},
+						console.log(data.msg)
+						return data.msg
+					  })
+	
+	
+					  .catch(error =>  console.error(error));
+				  },
 	
 			
 
