@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: a80fbbd3ad8e
-Revises: 8bea67a51ada
-Create Date: 2023-06-29 01:46:56.464042
+Revision ID: 0651edbd5f9a
+Revises: 
+Create Date: 2023-07-04 02:56:53.909973
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a80fbbd3ad8e'
-down_revision = '8bea67a51ada'
+revision = '0651edbd5f9a'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -23,6 +23,14 @@ def upgrade():
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
+    )
+    op.create_table('user',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('email', sa.String(length=120), nullable=False),
+    sa.Column('password', sa.String(length=80), nullable=False),
+    sa.Column('is_active', sa.Boolean(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email')
     )
     op.create_table('city',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -62,5 +70,6 @@ def downgrade():
     op.drop_table('user_favorite_countries')
     op.drop_table('comment')
     op.drop_table('city')
+    op.drop_table('user')
     op.drop_table('country')
     # ### end Alembic commands ###
