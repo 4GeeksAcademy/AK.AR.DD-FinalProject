@@ -113,6 +113,7 @@ def get_countries():
         cities = [city.name for city in country.cities]
         country_data = {
             'country_name': country.name,
+            'country_img' : country.image_url,
             'cities': cities
         }
         country_list.append(country_data)
@@ -142,6 +143,24 @@ def get_cities_by_country(country_name):
             return jsonify({'message': 'No cities assigned to this country yet'}), 200
     else:
         return jsonify({'message': 'Country not found'}), 404
+    
+@api.route('/country/<country_name>', methods=['DELETE'])
+def delete_country(country_name):
+    country = Country.query.filter_by(name=country_name).first()
+
+    if not country:
+        return jsonify({'message': 'Country not found'}), 404
+
+    # Eliminar todas las ciudades asociadas al país
+    for city in country.cities:
+        db.session.delete(city)
+
+    # Eliminar el país
+    db.session.delete(country)
+    db.session.commit()
+
+    return jsonify({'message': 'Country and associated cities deleted successfully'}), 200
+
 
 @api.route("/login", methods=["POST"])
 def login():
@@ -157,7 +176,10 @@ def login():
         return jsonify({"msg": "Bad email or password"}), 401
 
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    response = jsonify(access_token=access_token)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+    # return jsonify(access_token=access_token)
 
 @api.route("/signup", methods=["POST"])
 def signup():
@@ -197,6 +219,56 @@ def protected():
     return jsonify(response_body), 200
 
 
+# @api.route('/api/saveImageUrl', methods=['POST'])
+# def save_image_url():
+#     data = request.get_json()
+#     country = data['country']
+#     image_url = data['imageUrl']
+
+#     # Buscar el país en la base de datos por su nombre
+#     country_obj = Country.query.filter_by(name=country).first()
+
+#     if country_obj:
+#         # Actualizar el campo image_url del país encontrado
+#         country_obj.image_url = image_url
+#         db.session.commit()
+#         return jsonify({'message': 'URL de la imagen guardada en la base de datos'})
+#     else:
+#         return jsonify({'error': 'País no encontrado'})
+
+# @api.route('/api/saveImageUrl', methods=['POST'])
+# def save_image_url():
+#     data = request.get_json()
+#     country = data['country']
+#     image_url = data['imageUrl']
+
+#     # Buscar el país en la base de datos por su nombre
+#     country_obj = Country.query.filter_by(name=country).first()
+
+#     if country_obj:
+#         # Actualizar el campo image_url del país encontrado
+#         country_obj.image_url = image_url
+#         db.session.commit()
+#         return jsonify({'message': 'URL de la imagen guardada en la base de datos'})
+#     else:
+#         return jsonify({'error': 'País no encontrado'})
+
+@api.route('/saveImageUrl', methods=['POST'])
+def save_image_url():
+    data = request.get_json()
+    country = data['country']
+    image_url = data['imageUrl']
+
+    # Buscar el país en la base de datos por su nombre
+    country_obj = Country.query.filter_by(name=country).first()
+
+    if country_obj:
+        # Actualizar el campo image_url del país encontrado
+        country_obj.image_url = image_url
+        db.session.commit()
+        return jsonify({'message': 'URL de la imagen guardada en la base de datos'})
+    else:
+        return jsonify({'error': 'País no encontrado'})
 
 
    
