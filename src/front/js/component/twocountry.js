@@ -206,7 +206,7 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 
 export const Twocountry = () => {
   const { store, actions } = useContext(Context);
-  const paises = store.paises;
+  const paises = store.countries;
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCountryCities, setSelectedCountryCities] = useState([]);
   const [weatherData, setWeatherData] = useState({});
@@ -261,7 +261,7 @@ export const Twocountry = () => {
     <div>
       {paises.map((pais, index) => (
         <div key={index} className="card" style={{ width: "25%" }}>
-          <img src={rigoImageUrl} className="card-img-top" alt="..." />
+          <img src={pais.country_img} className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{pais.country_name}</h5>
             <div className="card-text">

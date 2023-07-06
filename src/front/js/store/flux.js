@@ -1,9 +1,11 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 
 	return {
 	  store: {
 		message: null,
 		paises: [],
+		countries: [],
 		demo: [
 		  {
 			title: "FIRST",
@@ -235,12 +237,330 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  const response = await fetch(process.env.BACKEND_URL + '/api/country');
 			  const data = await response.json();
 		  
-			  setStore({ paises: data.countries });
+			  setStore({ countries: data.countries });
+			  console.log(data.countries)
 			} catch (error) {
 			  console.error("Error loading countries:", error);
 			}
 		  },
+		  deleteCountry: async (countryName) => {
+			try {
+			  const requestOptions = {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' }
+			  };
+	
+			  const response = await fetch(`https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/country/${countryName}`, requestOptions);
+			  if (response.ok) {
+				console.log('Country deleted successfully');
+				// Realiza cualquier otra acción necesaria después de eliminar el país
+			  } else {
+				console.error('Error deleting country');
+			  }
+			} catch (error) {
+			  console.error('Error deleting country:', error);
+			}
+		  },
 		  
+		// processAndSaveImage: async (file, selectedCountry,setImageUrl ) => {
+		// 	try {
+		// 	  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+		// 	  const apiKey = '447623599368252';
+		// 	  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+		// 	  const folderName = 'ImagenesPais';
+		  
+		// 	  const formData = new FormData();
+		// 	  formData.append('file', file);
+		// 	  formData.append('upload_preset', 'images'); // Cambia 'default' por 'images'
+		// 	  formData.append('folder', folderName);
+		  
+		// 	  const options = {
+		// 		method: 'POST',
+		// 		body: formData,
+		// 	  };
+		  
+		// 	  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+		// 	  if (response.ok) {
+		// 		// La imagen se subió exitosamente a Cloudinary
+		// 		console.log('Imagen subida exitosamente');
+		// 		const responseData = await response.json();
+  		// 		setImageUrl(responseData.secure_url); //
+		  
+		// 		// Aquí puedes realizar cualquier otra acción necesaria después de subir la imagen
+		  
+		// 	  } else {
+		// 		// Ocurrió un error al subir la imagen a Cloudinary
+		// 		console.error('Error al subir la imagen');
+		// 	  }
+		// 	} catch (error) {
+		// 	  console.error('Error al subir la imagen:', error);
+		// 	}
+		//   }
+		  
+		// processAndSaveImage: async (file, selectedCountry, setImageUrl) => {
+		// 	try {
+		// 	  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+		// 	  const apiKey = '447623599368252';
+		// 	  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+		// 	  const folderName = 'ImagenesPais';
+			
+		// 	  const formData = new FormData();
+		// 	  formData.append('file', file);
+		// 	  formData.append('upload_preset', 'images'); // Cambia 'default' por 'images'
+		// 	  formData.append('folder', folderName);
+			
+		// 	  const options = {
+		// 		method: 'POST',
+		// 		body: formData,
+		// 	  };
+			
+		// 	  const response = await fetch(apiUrl + '/image/upload', options);
+			
+		// 	  if (response.ok) {
+		// 		// La imagen se subió exitosamente a Cloudinary
+		// 		console.log('Imagen subida exitosamente');
+		// 		const responseData = await response.json();
+		// 		setImageUrl(responseData.secure_url);
+		  
+			
+		// 		const imageData = {
+		// 		  country: selectedCountry,
+		// 		  imageUrl: responseData.secure_url
+		// 		};
+		  
+		// 		const saveResponse = await fetch('https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/saveImageUrl', {
+		// 		  method: 'POST',
+		// 		  headers: {
+		// 			'Content-Type': 'application/json'
+		// 		  },
+		// 		  body: JSON.stringify(imageData)
+		// 		});
+		  
+		// 		if (saveResponse.ok) {
+		// 		  console.log('Imagen guardada en la base de datos');
+				  
+		// 		} else {
+		// 		  console.error('Error al guardar la imagen en la base de datos');
+		// 		}
+		// 	  } else {
+				
+		// 		console.error('Error al subir la imagen');
+		// 	  }
+		// 	} catch (error) {
+		// 	  console.error('Error al subir la imagen:', error);
+		// 	}
+		//   }
+		  
+		// processAndSaveImage: async (file, selectedCountry, setImageUrl) => {
+		// 	try {
+		// 	  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+		// 	  const apiKey = '447623599368252';
+		// 	  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+		// 	  const folderName = 'ImagenesPais';
+		  
+		// 	  const formData = new FormData();
+		// 	  formData.append('file', file);
+		// 	  formData.append('upload_preset', 'images');
+		// 	  formData.append('folder', folderName);
+		  
+		// 	  const options = {
+		// 		method: 'POST',
+		// 		body: formData,
+		// 	  };
+		  
+		// 	  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+		// 	  if (response.ok) {
+		// 		console.log('Imagen subida exitosamente');
+		// 		const responseData = await response.json();
+		// 		setImageUrl(responseData.secure_url);
+		  
+		// 		console.log('URL de la imagen:', responseData.secure_url); // Agregado: mostrar la URL en la consola
+		  
+		// 		const imageData = {
+		// 		  country: selectedCountry,
+		// 		  imageUrl: responseData.secure_url
+		// 		};
+		  
+		// 		const saveResponse = await fetch('https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/saveImageUrl', {
+		// 		  method: 'POST',
+		// 		  headers: {
+		// 			'Content-Type': 'application/json'
+		// 		  },
+		// 		  body: JSON.stringify(imageData)
+		// 		});
+		  
+		// 		if (saveResponse.ok) {
+		// 		  console.log('Imagen guardada en la base de datos');
+		// 		} else {
+		// 		  console.error('Error al guardar la imagen en la base de datos');
+		// 		}
+		// 	  } else {
+		// 		console.error('Error al subir la imagen');
+		// 	  }
+		// 	} catch (error) {
+		// 	  console.error('Error al subir la imagen:', error);
+		// 	}
+		//   }
+
+		// processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
+		// 	try {
+		// 	  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+		// 	  const apiKey = '447623599368252';
+		// 	  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+		// 	  const folderName = 'ImagenesPais';
+		  
+		// 	  const formData = new FormData();
+		// 	  formData.append('file', file);
+		// 	  formData.append('upload_preset', 'images');
+		// 	  formData.append('folder', folderName);
+		  
+		// 	  const options = {
+		// 		method: 'POST',
+		// 		body: formData,
+		// 	  };
+		  
+		// 	  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+		// 	  if (response.ok) {
+		// 		console.log('Imagen subida exitosamente');
+		// 		const responseData = await response.json();
+		// 		setImageUrl(responseData.secure_url);
+		  
+		// 		console.log('URL de la imagen:', responseData.secure_url);
+		  
+		// 		const imageData = {
+		// 		  country: selectedCountry,
+		// 		  imageUrl: responseData.secure_url,
+		// 		};
+		  
+		// 		const saveResponse = await fetch('/api/saveImageUrl', {
+		// 		  method: 'POST',
+		// 		  headers: {
+		// 			'Content-Type': 'application/json',
+		// 		  },
+		// 		  body: JSON.stringify(imageData),
+		// 		});
+		  
+		// 		if (saveResponse.ok) {
+		// 		  console.log('Imagen guardada en la base de datos');
+		// 		} else {
+		// 		  console.error('Error al guardar la imagen en la base de datos');
+		// 		}
+		// 	  } else {
+		// 		console.error('Error al subir la imagen');
+		// 	  }
+		// 	} catch (error) {
+		// 	  console.error('Error al subir la imagen:', error);
+		// 	}
+		//   }
+		  
+		// processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
+		// 	try {
+		// 	  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+		// 	  const apiKey = '447623599368252';
+		// 	  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+		// 	  const folderName = 'ImagenesPais';
+		  
+		// 	  const formData = new FormData();
+		// 	  formData.append('file', file);
+		// 	  formData.append('upload_preset', 'images');
+		// 	  formData.append('folder', folderName);
+		  
+		// 	  const options = {
+		// 		method: 'POST',
+		// 		body: formData,
+		// 	  };
+		  
+		// 	  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+		// 	  if (response.ok) {
+		// 		console.log('Imagen subida exitosamente');
+		// 		const responseData = await response.json();
+		// 		setImageUrl(responseData.secure_url);
+		  
+		// 		console.log('URL de la imagen:', responseData.secure_url);
+		  
+		// 		const imageData = {
+		// 		  country: selectedCountry,
+		// 		  imageUrl: responseData.secure_url,
+		// 		};
+		  
+		// 		const saveResponse = await fetch('https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/saveImageUrl', {
+		// 		  method: 'POST',
+		// 		  headers: {
+		// 			'Content-Type': 'application/json',
+		// 		  },
+		// 		  body: JSON.stringify(imageData),
+		// 		});
+		  
+		// 		if (saveResponse.ok) {
+		// 		  console.log('Imagen guardada en la base de datos');
+		// 		} else {
+		// 		  console.error('Error al guardar la imagen en la base de datos');
+		// 		}
+		// 	  } else {
+		// 		console.error('Error al subir la imagen');
+		// 	  }
+		// 	} catch (error) {
+		// 	  console.error('Error al subir la imagen:', error);
+		// 	}
+		//   }
+		
+		 processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
+			try {
+			  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+			  const apiKey = '447623599368252';
+			  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+			  const folderName = 'ImagenesPais';
+		  
+			  const formData = new FormData();
+			  formData.append('file', file);
+			  formData.append('upload_preset', 'images');
+			  formData.append('folder', folderName);
+		  
+			  const options = {
+				method: 'POST',
+				body: formData,
+			  };
+		  
+			  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+			  if (response.ok) {
+				console.log('Imagen subida exitosamente');
+				const responseData = await response.json();
+				const imageUrl = responseData.secure_url;
+		  
+				console.log('URL de la imagen:', imageUrl);
+		  
+				const imageData = {
+				  country: selectedCountry,
+				  imageUrl: imageUrl,
+				};
+		  
+				const saveResponse = await fetch('https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/saveImageUrl', {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
+				  body: JSON.stringify(imageData),
+				});
+		  
+				if (saveResponse.ok) {
+				  console.log('Imagen guardada en la base de datos');
+				} else {
+				  console.error('Error al guardar la imagen en la base de datos');
+				}
+			  } else {
+				console.error('Error al subir la imagen');
+			  }
+			} catch (error) {
+			  console.error('Error al subir la imagen:', error);
+			}
+		  }
+
+		
 		  
 	  }
 	};
