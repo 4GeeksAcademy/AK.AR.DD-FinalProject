@@ -176,7 +176,10 @@ def login():
         return jsonify({"msg": "Bad email or password"}), 401
 
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    response = jsonify(access_token=access_token)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+    # return jsonify(access_token=access_token)
 
 @api.route("/signup", methods=["POST"])
 def signup():

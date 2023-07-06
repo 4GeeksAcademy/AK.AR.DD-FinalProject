@@ -10,6 +10,7 @@ import { Admin } from "./pages/admin";
 import { OneCountry } from "./pages/onecountry";
 import { City } from "./pages/city";
 import injectContext from "./store/appContext";
+import { Login } from "./component/login.jsx";
 import { Signup } from "./component/signup.jsx";
 
 import { Navbar } from "./component/navbar";
@@ -31,6 +32,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<Login />} path="/login" />
                         <Route element={<Admin />} path="/admin" />
                         <Route element={<City />} path="/city" />
                         <Route element={<OneCountry />} path="/onecountry" />

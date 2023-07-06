@@ -1,6 +1,6 @@
 
-  
 const getState = ({ getStore, getActions, setStore }) => {
+
 	return {
 	  store: {
 		message: null,
@@ -33,59 +33,76 @@ const getState = ({ getStore, getActions, setStore }) => {
 			localStorage.removeItem("token");
 		},
 
-		login: (email,password) => {
-			const requestOptions = {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json'},
-				body: JSON.stringify(
-				{
-					"email":email,
-					"password":password
-				}
-				)
-			};
-			fetch("https://deborahdobles-animated-xylophone-66jp7rjp4p5c4rvp-3001.preview.app.github.dev/api/login", requestOptions)
-				.then(response => { 
-					console.log(response.status)
-					if (response.status == 200){
-						setStore({auth: true})
-					}
-					return response.json()
-				})
-				.then(data => {
-					localStorage.setItem("token", data.access_token);
-					console.log(data)
-				});
-		},
+			login: async (email, password) => {
+				try{
+					const requestOptions = {
 
-		signup: (fullname, email, password, nationality, description) => {
-			const requestOptions = {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json'},
-				body: JSON.stringify(
-				{
-					"fullname":fullname,
-					"email":email,
-					"password":password,
-					"nationality":nationality,
-					"description":description
-				}
-				)
-			};
-			fetch("https://deborahdobles-animated-xylophone-66jp7rjp4p5c4rvp-3001.preview.app.github.dev/api/signup", requestOptions)
-				.then(response => { 
-					console.log(response.status)
-					if (response.status == 200){
-						setStore({auth: true})
+						method: 'POST',
+						headers: { 
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'},
+						// mode:"no-cors",
+						// credentials: "include",
+						body: JSON.stringify(
+						{
+							"email":email,
+							"password":password
+						}
+						)
+					};
+					await fetch(process.env.BACKEND_URL + '/api/login', requestOptions)
+						.then(response => { 
+							console.log(response)
+							if (response.status == 200){
+								setStore({auth: true})
+							}
+							return response.json()
+						})
+						.then(data => {
+							localStorage.setItem("token", data.access_token);
+							console.log(data)
+							return data
+						})
+
+						// .catch(error =>  console.error(error));
+					}catch (error){
+						return error.response;
 					}
-					return response.json()
-				})
-				.then(data => {
-					localStorage.setItem("token", data.access_token);
-					console.log(data)
-				});
-		},
-  
+			},
+
+			signup: (fullname, email, password, nationality, description) => {
+				const requestOptions = {
+
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json'},
+					body: JSON.stringify(
+					{
+						"fullname":fullname,
+						"email":email,
+						"password":password,
+						"nationality":nationality,
+						"description":description
+					}
+					)
+				};
+				fetch(process.env.BACKEND_URL + '/api/signup', requestOptions)
+				.then(response => { 
+
+						console.log(response.status)
+						if (response.status == 200){
+							console.log(response)
+						}
+						return response.json()
+					})
+					.then(data => {
+						console.log(data.msg)
+						return data.msg
+					  })
+	
+	
+					  .catch(error =>  console.error(error));
+				  },
+
 		loadSomeData: async () => {
 		  try {
 			const response = await fetch("https://restcountries.com/v2/all");
@@ -192,7 +209,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  body: JSON.stringify(countryData)
 			};
 		
-			const response = await fetch('https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/country', requestOptions);
+			const response = await fetch(process.env.BACKEND_URL + '/api/country', requestOptions);
 		
 			if (response.ok) {
 			  console.log('Data saved to database successfully');
@@ -208,7 +225,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  
 		loadCitiesByCountry: async (countryName) => {
 			try {
-			  const response = await fetch(`https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/cities/${countryName}`);
+			  const response = await fetch(process.env.BACKEND_URL + '/api/cities/'+ countryName);
 			  const data = await response.json();
 			  setStore({ cities: data.cities }); // Actualiza el estado 'cities' con los datos recibidos
 			} catch (error) {
@@ -217,7 +234,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  },
 		  loadCountries: async () => {
 			try {
-			  const response = await fetch("https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/country");
+			  const response = await fetch(process.env.BACKEND_URL + '/api/country');
 			  const data = await response.json();
 		  
 			  setStore({ countries: data.countries });
