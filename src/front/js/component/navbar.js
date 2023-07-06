@@ -1,6 +1,10 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
+import { Login } from "../component/login.jsx";
+import { Signup } from "../component/signup.jsx";
+import "../../styles/navbar.css";
+import YMG from "../../img/YMG-logo.jpg";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -12,14 +16,16 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="navbar">
-      <div className="container">
+    <nav className="navbar bg-primary">
+      <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          <span className="navbar-brand-text">YOUR NOMAD GUIDE</span>
+          <img src={YMG} className="w-25 h-25" />
         </Link>
         <div className="ml-auto">
-          {store.auth ? (
-            <button className="btn btn-logout" onClick={handleLogout}>
+          {store.auth === true ? (
+            <button className="btn btn-logout title" onClick={() => handleLogout()}>
+          {/* {store.auth ? (
+            <button className="btn btn-logout" onClick={handleLogout}> */}
               Logout
             </button>
           ) : (
@@ -31,10 +37,13 @@ export const Navbar = () => {
                 Sign Up
               </Link>
               <Link to="/admin">
-				<button className="btn btn-warning">Admin</button>
-			</Link>
+                <button className="btn btn-warning">Admin</button>
+              </Link>
             </>
           )}
+          {/* <Link to="/admin">
+				    <button className="btn btn-warning">Admin</button>
+			    </Link> */}
         </div>
       </div>
     </nav>

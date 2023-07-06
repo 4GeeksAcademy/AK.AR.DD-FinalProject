@@ -7,12 +7,11 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Admin } from "./pages/admin";
-import { OneCountry } from "./pages/onecountry";
 import { City } from "./pages/city";
 import injectContext from "./store/appContext";
 import { Login } from "./component/login.jsx";
 import { Signup } from "./component/signup.jsx";
-
+import { OneCountry } from "./component/onecountry";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
