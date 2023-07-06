@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { Login } from "../component/login.jsx";
 import { Signup } from "../component/signup.jsx";
+import "../../styles/navbar.css";
+import YMG from "../../img/YMG-logo.jpg";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -24,26 +26,29 @@ export const Navbar = () => {
   const handleSignupModalShow = () => setShowSignupModal(true);
 
   return (
-    <nav className="navbar">
-      <div className="container">
+    <nav className="navbar bg-primary">
+      <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          <span className="navbar-brand-text">YOUR NOMAD GUIDE</span>
+          <img src={YMG} />
         </Link>
         <div className="ml-auto">
           {store.auth === true ? (
-            <button className="btn btn-logout" onClick={() => handleLogout()}>
+            <button className="btn btn-logout title" onClick={() => handleLogout()}>
               Logout
             </button>
           ) : (
             <>
-              <button className="btn btn-login" onClick={handleLoginModalShow}>
+              <button className="btn btn-login title" onClick={handleLoginModalShow}>
                 Login
               </button>
-              <button className="btn btn-signup" onClick={handleSignupModalShow}>
+              <button className="btn btn-signup title" onClick={handleSignupModalShow}>
                 Sign Up
               </button>
             </>
           )}
+          <Link to="/admin">
+				    <button className="btn btn-warning">Admin</button>
+			    </Link>
         </div>
       </div>
 
@@ -66,9 +71,7 @@ export const Navbar = () => {
           <Signup handleClose={handleSignupModalClose} />
         </Modal.Body>
       </Modal>
-      <Link to="/admin">
-				<button className="btn btn-warning">Admin</button>
-			</Link>
+
     </nav>
   );
 };

@@ -1,3 +1,109 @@
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
+import rigoImageUrl from "../../img/rigo-baby.jpg";
+import { City } from "../pages/city";
+import { CitybyCountry } from "./citybycountry";
+
+export const OneCountry = ({ selectedCountry }) => {
+  const { store, actions } = useContext(Context);
+  const [showCity, setShowCity] = useState(false);
+  const [cityDataList, setCityDataList] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      actions.loadWeatherData(selectedCountry);
+      actions.loadCitiesByCountry(selectedCountry);
+    }
+  }, [selectedCountry]);
+
+  const handleAddCity = () => {
+    setShowCity(true);
+  };
+
+  const country = store.paises.find((country) => country.name === selectedCountry);
+  const countryDetails = country ? country.details : null;
+
+  const handleSaveCity = (cityData) => {
+    const existingCity = cityDataList.find((data) => data.name === cityData.name);
+    if (existingCity) {
+      setShowAlert(true);
+      return;
+    }
+
+    setCityDataList([...cityDataList, cityData]);
+  };
+
+  const handleSaveToDatabase = () => {
+    const data = {
+      country: country,
+      selectedCountry: selectedCountry,
+      cities: cityDataList
+    };
+    console.log("Data to be saved:", data);
+    actions.saveDataToDatabase(data);
+    console.log(selectedCountry)
+  };
+
+  return (
+    <div className="container-fluid">
+      {countryDetails && (
+        <div className="card mb-3" style={{ width: "100%" }}>
+          <div className="row g-0">
+            <div className="col-md-4">
+              <img src={rigoImageUrl} className="img-fluid rounded-start" alt="..." />
+            </div>
+            <div className="col-md-8">
+              <div className="card-body">
+                <h2 className="card-title">
+                  {selectedCountry}
+                  {countryDetails.subregion && `, ${countryDetails.subregion}`}{" "}
+                  <span role="img" aria-label="Location">
+                    🌏
+                  </span>
+                </h2>
+                <h5>Capital: {countryDetails.capital}</h5>
+                <h5>Currency: {countryDetails.currencies[0].name}</h5>
+                <h5>Languages: {countryDetails.languages.map((lang) => lang.name).join(", ")}</h5>
+                <h5>Population: {countryDetails.population}</h5>
+                {store.weatherData && (
+                  <>
+                    <h5>Weather(now): {store.weatherData.current.condition.text}</h5>
+                    <img src={store.weatherData.current.condition.icon} alt="Weather Icon" />
+                  </>
+                )}
+                <button type="button" className="btn btn-secondary" onClick={handleAddCity}>
+                  Add a city
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCity && <City selectedCountry={selectedCountry} handleSaveCity={handleSaveCity} />}
+
+      {showAlert && (
+        <div className="alert alert-danger" role="alert">
+          City already exists
+        </div>
+      )}
+
+      {cityDataList.map((cityData, index) => (
+        <div key={index}>
+          <h2>City: {cityData.name}</h2>
+          <h2>Weather: {cityData.weather.current.condition.text}</h2>
+        </div>
+      ))}
+
+      {selectedCountry && <CitybyCountry selectedCountry={selectedCountry} />}
+
+      <button type="button" className="btn btn-success" onClick={handleSaveToDatabase}>
+        GRABAR
+      </button>
+    </div>
+  );
+};
 
 // import React, { useEffect, useContext } from "react";
 // import { Context } from "../store/appContext";
@@ -677,113 +783,3 @@
 //     </div>
 //   );
 // };
-
-import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import { City } from "./city";
-import { CitybyCountry } from "../component/citybycountry";
-
-export const OneCountry = ({ selectedCountry }) => {
-  const { store, actions } = useContext(Context);
-  const [showCity, setShowCity] = useState(false);
-  const [cityDataList, setCityDataList] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
-
-  useEffect(() => {
-    if (selectedCountry) {
-      actions.loadWeatherData(selectedCountry);
-      actions.loadCitiesByCountry(selectedCountry);
-    }
-  }, [selectedCountry]);
-
-  const handleAddCity = () => {
-    setShowCity(true);
-  };
-
-  const country = store.paises.find((country) => country.name === selectedCountry);
-  const countryDetails = country ? country.details : null;
-
-  const handleSaveCity = (cityData) => {
-    const existingCity = cityDataList.find((data) => data.name === cityData.name);
-    if (existingCity) {
-      setShowAlert(true);
-      return;
-    }
-
-    setCityDataList([...cityDataList, cityData]);
-  };
-
-  const handleSaveToDatabase = () => {
-    const data = {
-      country: country,
-      selectedCountry: selectedCountry,
-      cities: cityDataList
-    };
-    console.log("Data to be saved:", data);
-    actions.saveDataToDatabase(data);
-    console.log(selectedCountry)
-  };
-
-  return (
-    <div className="container">
-      {countryDetails && (
-        <div className="card mb-3" style={{ width: "100%" }}>
-          <div className="row g-0">
-            <div className="col-md-4">
-              <img src={rigoImageUrl} className="img-fluid rounded-start" alt="..." />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h2 className="card-title">
-                  {selectedCountry}
-                  {countryDetails.subregion && `, ${countryDetails.subregion}`}{" "}
-                  <span role="img" aria-label="Location">
-                    🌏
-                  </span>
-                </h2>
-                <h5>Capital: {countryDetails.capital}</h5>
-                <h5>Currency: {countryDetails.currencies[0].name}</h5>
-                <h5>Languages: {countryDetails.languages.map((lang) => lang.name).join(", ")}</h5>
-                <h5>Population: {countryDetails.population}</h5>
-                {store.weatherData && (
-                  <>
-                    <h5>Weather(now): {store.weatherData.current.condition.text}</h5>
-                    <img src={store.weatherData.current.condition.icon} alt="Weather Icon" />
-                  </>
-                )}
-                <button type="button" className="btn btn-secondary" onClick={handleAddCity}>
-                  Add a city
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showCity && <City selectedCountry={selectedCountry} handleSaveCity={handleSaveCity} />}
-
-      {showAlert && (
-        <div className="alert alert-danger" role="alert">
-          City already exists
-        </div>
-      )}
-
-      {cityDataList.map((cityData, index) => (
-        <div key={index}>
-          <h2>City: {cityData.name}</h2>
-          <h2>Weather: {cityData.weather.current.condition.text}</h2>
-        </div>
-      ))}
-
-      {selectedCountry && <CitybyCountry selectedCountry={selectedCountry} />}
-
-      <button type="button" className="btn btn-success" onClick={handleSaveToDatabase}>
-        GRABAR
-      </button>
-    </div>
-  );
-};
-
-
-
