@@ -66,6 +66,9 @@ export const Navbar = () => {
           <Signup handleClose={handleSignupModalClose} />
         </Modal.Body>
       </Modal>
+      <Link to="/admin">
+				<button className="btn btn-warning">Admin</button>
+			</Link>
     </nav>
   );
 };
