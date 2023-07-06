@@ -28,6 +28,28 @@
 // };
 
 
+// import React, { useContext, useEffect } from "react";
+// import { Context } from "../store/appContext";
+// import rigoImageUrl from "../../img/rigo-baby.jpg";
+// import { Twocountry } from "../component/twocountry";
+// import { CiudadxCountry } from "../component/ciudadxcountry";
+// import "../../styles/home.css";
+
+// export const Home = () => {
+//   const { store, actions } = useContext(Context);
+
+//   useEffect(() => {
+//     actions.loadCountries(); // Cargar países tan pronto como se cargue la página
+//   }, []);
+
+//   return (
+//     <div className="twocountry-container">
+//     <Twocountry/>
+//   </div>
+//   );
+// };
+
+
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
@@ -43,10 +65,9 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="text-center mt-5">
-     
-      <Twocountry />
-     
+    <div className="cartas">
+      <Twocountry className="twocountry-container" />
     </div>
   );
 };
+
