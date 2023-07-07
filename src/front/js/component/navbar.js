@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../component/login.jsx";
 import { Signup } from "../component/signup.jsx";
 import "../../styles/navbar.css";
-import YMG from "../../img/YMG-logo.jpg";
+import YMG from "../../img/YMG-logo.png";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -16,10 +16,13 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="navbar bg-primary">
+    // <nav className="navbar bg-primary">
+      <nav className="navbar">
+       
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          <img src={YMG} className="w-25 h-25" />
+          <img src={YMG} className=" logo" />
+         
         </Link>
         <div className="ml-auto">
           {store.auth === true ? (
@@ -30,14 +33,14 @@ export const Navbar = () => {
             </button>
           ) : (
             <>
-              <Link to="/login" className="btn btn-login">
+              <Link to="/login" className="btn btn-login title">
                 Login
               </Link>
-              <Link to="/signup" className="btn btn-signup">
+              <Link to="/signup" className="btn btn-signup title">
                 Sign Up
               </Link>
               <Link to="/admin">
-                <button className="btn btn-warning">Admin</button>
+                <button className="btn btn-warning title">Admin</button>
               </Link>
             </>
           )}

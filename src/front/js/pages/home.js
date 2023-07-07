@@ -19,21 +19,17 @@ export const Home = () => {
     <div className="mt-5">
       <div className="row container-fluid justify-content-center">
         <div className="col-1 mx-5">
-          <Link to="/city">
-            <button className="btn btn-danger justify-content-right">Ciudades</button>
-          </Link>
+          
         </div>
         <div className="col-1">
-          <Link to="/">
-            <button className="btn btn-primary">Países</button>
-          </Link>
         </div>
       </div>
     </div>
+    <h1 className="bestplace">The best <span className="bestpalcespan">places</span></h1>
+    <div className="contenedorpais">
+  <Twocountry className="twocountry" />
+</div>
 
-    <div className="mt-5 container-fluid row d-flex justify-content-center">
-      <Twocountry />
-    </div>
     </>
     
 

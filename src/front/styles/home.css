@@ -5,3 +5,99 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+html {
+	box-sizing: border-box;
+    font-size: 62.5%;  /*1 REM igual a 10px */
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+body{
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.6rem;
+    line-height: 2;
+
+}
+.title{
+    font-size: 2rem;
+    color: white;
+}
+
+.contenedorpais {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem; 
+    
+  }
+  .card-img-top {
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+    height: 200px; /* Ajusta el alto según tus necesidades */
+    object-fit: cover; 
+    border-radius: 3rem;
+    transition: filter 0.3s ease;
+  }
+  /* .card-img-top:hover {
+    filter: brightness(80%) hue-rotate(180deg); 
+  } */
+ 
+  .card-title{
+    font-size: 5rem;
+  }
+ 
+  .twocountry:hover {
+    transform: scale(1.05); /* Escala el componente al 105% */
+    transition: transform 0.3s ease; /* Agrega una transición suave */
+    /* background-color:#04f80c41 ; */
+    color: #3949AB;
+  }
+  .twocountry{
+    border-radius: 3rem;
+  }
+  .more {
+    background: #3949AB;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .more:hover {
+    background-color:#41B3A3;
+  }
+  .datos{
+    font-size: 2rem;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    color: #f8f5f5;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .modal{
+    background: rgba(0, 0, 255, 0.12);
+  }
+  .modal-content{
+    background: rgba(0, 0, 0, 0.265);
+    color: white;
+  }
+  .bestplace{
+    text-align: center;
+    padding: 3rem 0rem;
+    font-size: 6rem;
+    font-family: 'Belanosima', sans-serif;
+
+  }
+  .bestpalcespan{
+    color:#3949AB
+    
+  }
