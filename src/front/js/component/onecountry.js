@@ -18,6 +18,7 @@ export const OneCountry = ({ selectedCountry }) => {
     if (selectedCountry) {
       actions.loadWeatherData(selectedCountry);
       actions.loadCitiesByCountry(selectedCountry);
+      // fetchCountryImage(selectedCountry);
       console.log(store.paises)
       console.log(store.countries)
     }
@@ -49,7 +50,7 @@ export const OneCountry = ({ selectedCountry }) => {
     };
     console.log("Data to be saved:", data);
     actions.saveDataToDatabase(data);
-    console.log(selectedCountry);
+    // console.log(selectedCountry);
   };
 
   const handleImageChange = (e) => {
@@ -68,6 +69,23 @@ export const OneCountry = ({ selectedCountry }) => {
     }
   };
 
+const fetchCountryImage = async (countryName) => {
+  try {
+    const response = await fetch(`https://alejandrorivera2306-scaling-spoon-qr5vqxg5vggf9vg9-3001.preview.app.github.dev/getImageUrl/${countryName}`);
+
+    if (response.ok) {
+      const data = await response.json();
+      const imageUrl = data.imageUrl;
+
+      setImageUrl(imageUrl);
+      
+    } else {
+      console.error('Error al obtener la imagen del país desde la base de datos');
+    }
+  } catch (error) {
+    console.error('Error al obtener la imagen del país:', error);
+  }
+};
   const country = store.paises.find((country) => country.name === selectedCountry);
   const countryDetails = country ? country.details : null;
   // const pais = store.countries.find((country) => country.name === selectedCountry);
@@ -134,7 +152,7 @@ export const OneCountry = ({ selectedCountry }) => {
       {selectedCountry && <CitybyCountry selectedCountry={selectedCountry} />}
 
       <button type="button" className="btn btn-success" onClick={handleSaveToDatabase}>
-        GRABAR
+        SAVE COUNTRY
       </button>
     </div>
   );
@@ -246,3 +264,4 @@ export const OneCountry = ({ selectedCountry }) => {
 //     </div>
 //   );
 // };
+

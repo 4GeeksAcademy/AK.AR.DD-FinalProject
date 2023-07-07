@@ -269,6 +269,18 @@ def save_image_url():
         return jsonify({'message': 'URL de la imagen guardada en la base de datos'})
     else:
         return jsonify({'error': 'País no encontrado'})
+    
+@api.route('/getImageUrl/<country>', methods=['GET'])
+def get_image_url(country):
+    # Buscar el país en la base de datos por su nombre
+    country_obj = Country.query.filter_by(name=country).first()
+
+    if country_obj:
+        image_url = country_obj.image_url
+        return jsonify({'imageUrl': image_url})
+    else:
+        return jsonify({'error': 'País no encontrado'})
+
 
 
    
