@@ -29,7 +29,9 @@ const injectContext = PassedComponent => {
 			 * store, instead use actions, like this:
 			 **/
 			state.actions.getMessage();
-			state.actions.loadSomeData(); // <---- calling this function from the flux.js actions
+			state.actions.loadSomeData(); 
+			state.actions.isAuth();
+			// <---- calling this function from the flux.js actions
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

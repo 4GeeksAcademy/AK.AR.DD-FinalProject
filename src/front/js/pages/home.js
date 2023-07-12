@@ -25,33 +25,12 @@ export const Home = () => {
       </div>
     </div>
     <h1 className="bestplace">The best <span className="bestpalcespan">places</span></h1>
-    <div className="contenedorpais ">
-      <Twocountry className="twocountry" />
-    </div>
+    <div className="contenedorpais container">
+  <Twocountry className="twocountry" />
+</div>
 
     </>
     
 
   );
 };
-
-// import React, { useContext, useEffect } from "react";
-// import { Context } from "../store/appContext";
-// import rigoImageUrl from "../../img/rigo-baby.jpg";
-// import { Twocountry } from "../component/twocountry";
-// import { CiudadxCountry } from "../component/ciudadxcountry";
-// import "../../styles/home.css";
-
-// export const Home = () => {
-//   const { store, actions } = useContext(Context);
-
-//   useEffect(() => {
-//     actions.loadCountries(); // Cargar países tan pronto como se cargue la página
-//   }, []);
-
-//   return (
-//     <div className="cartas">
-//       <Twocountry className="twocountry-container" />
-//     </div>
-//   );
-// };

@@ -18,6 +18,8 @@ export const Admin = () => {
   };
 
   return (
+    <div className="container">
+      <form className="row row-cols-lg-auto g-3 align-items-center mt-5">
     <div className="container barra">
       <h1 className="bestplace">Welcome <span className="bestpalcespan">Dashboard</span></h1>
       <form className="row row-cols-lg-auto g-3 align-items-center">
