@@ -22,7 +22,7 @@ export const Signup = () => {
 
   return (
     <form onSubmit={sendData}>
-    <div className="container mt-3">
+    <div className="containerx mt-3">
       <div className="mb-3">
         <label htmlFor="fullname">Full name</label>
         <input

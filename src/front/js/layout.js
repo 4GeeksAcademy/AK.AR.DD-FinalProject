@@ -17,6 +17,10 @@ import { CommentFeed } from './component/comment.jsx';
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { CommentFeedPage } from "./pages/commentfeedpage.js";
+import { LoginAdmin } from "./component/loginadmin";
+import { Ciudades } from "./pages/ciudades";
+import { Country } from "./pages/country";
+
 
 //create your first component
 const Layout = () => {
@@ -39,10 +43,15 @@ const Layout = () => {
                         <Route element={<City />} path="/city" />
                         <Route element={<OneCountry />} path="/onecountry" />
                         <Route element={<Signup />} path="/signup" />
+                        {/* <Route element={<Ciudades />} path="/ciudades" /> */}
+                        <Route element={<Twocountry />  } path="/twocountry" />
+                        <Route element={<Ciudades />  } path="/ciudades" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Twocountry />} path="/" />
+//                         <Route element={<Twocountry />} path="/" />
                         <Route element={<CommentFeed />} path="/comment" />
                         <Route element={<CommentFeedPage />} path="/commentfeedpage" />
+                        <Route element={<LoginAdmin />} path="/loginadmin" />
+                        <Route element={<Country />} path="/country/:name" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

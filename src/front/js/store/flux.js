@@ -21,7 +21,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		],
 		options: [],
 		weatherData: null,
-		cities: []
+		cities: [],
+		selectedCountryCities:[]
 	  },
 	  actions: {
 		exampleFunction: () => {
@@ -34,38 +35,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			localStorage.removeItem("token");
 		},
 
-		// login: async (email, password) => {
-		// 	try {
-		// 		const requestOptions = {
-		// 			method: 'POST',
-		// 			headers: {
-		// 				'Accept': 'application/json',
-		// 				'Content-Type': 'application/json'
-		// 			},
-		// 			body: JSON.stringify({
-		// 				"email": email,
-		// 				"password": password
-		// 			})
-		// 		};
-		// 		await fetch(process.env.BACKEND_URL + '/api/login', requestOptions)
-		// 			.then(response => {
-		// 				console.log(response);
-		// 				if (response.status === 200) {
-		// 					setStore({ auth: true });
-		// 				}
-		// 				return response.json();
-		// 			})
-		// 			.then(data => {
-		// 				localStorage.setItem("token", data.access_token);
-		// 				setStore({user_id: data.user_id})
-		// 				console.log(data);
-		// 				return data;
-		// 			})
-		// 			.catch(error => console.error(error));
-		// 	} catch (error) {
-		// 		return error.response;
-		// 	}
-		// },
 		login: async (email, password) => {
 			try {
 			  const requestOptions = {
@@ -182,18 +151,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		},
 
-		loadCityWeather: async (city) => {
-			try {
-				const apiKey = "da3199df336942f8828210302232806";
-				const response = await fetch(
-					`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
-				);
-				const data = await response.json();
-				return data;
-			} catch (error) {
-				console.error("Error loading city weather data:", error);
-			}
-		},
+// 		loadCityWeather: async (city) => {
+// 			try {
+// 				const apiKey = "da3199df336942f8828210302232806";
+// 				const response = await fetch(
+// 					`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
+// 				);
+// 				const data = await response.json();
+// 				return data;
+// 			} catch (error) {
+// 				console.error("Error loading city weather data:", error);
+// 			}
+// 		},
 
 		getComments: async () => {
 			try {
@@ -231,77 +200,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.error("Error fetching comments:", error);
 			}
 		},
-
-		// addComment: async (content, user_id) => {
-		// 	try {
-		// 	  const response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/comment", {
-		// 		method: "POST",
-		// 		headers: {
-		// 		  "Content-Type": "application/json",
-		// 		},
-		// 		body: JSON.stringify({
-		// 		  "content": content,
-		// 		  "user_id": user_id
-		// 		}),
-		// 	  });
-		  
-		// 	  if (response.ok) {
-		// 		const data = await response.json();
-		// 		localStorage.setItem("token", data.access_token);
-		// 		setStore({ user_id: data.user_id });
-		// 		console.log("este es el token del comentario" + data);
-		// 		return data;
-
-		// 	  } else {
-		// 		return false; // Indicates failure
-		// 	  }
-		// 	} catch (error) {
-		// 	  console.error("Error adding comment:", error);
-		// 	  return false; // Indicates failure
-		// 	}
-		//   },	
-
-			// addComment: async (content, user_id) => {
-			// try {
-			// 	const token = localStorage.getItem("token");
-			// 	const requestOptions = {
-			// 	method: "POST",
-			// 	headers: {
-			// 		"Content-Type": "application/json",
-			// 		"Authorization": `Bearer ${token}`
-			// 	},
-			// 	body: JSON.stringify({
-			// 		"content": content,
-			// 		"user_id": user_id
-			// 	}),
-			// 	};
-
-			// 	const response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/comment", requestOptions);
-
-			// 	if (response.ok) {
-			// 	const data = await response.json();
-			// 	console.log("This is the comment token: " + data);
-			// 	console.log("Stored token: " + localStorage.getItem("token")); // Add this line to log the stored token
-			// 	return data;
-			// 	} else {
-			// 	return false; // Indicates failure
-			// 	}
-			// } catch (error) {
-			// 	console.error("Error adding comment:", error);
-			// 	return false; // Indicates failure
-			// }
-			// },
  
 			addComment: async (content) => {
 				const store = getStore()
 				try {
 				  const token = localStorage.getItem("token");
-				
-				  // Verificar si el token y el user_id existen
-				//   if (!token || !user_id) {
-				// 	console.error("Token or user_id not found. Please log in first.");
-				// 	return false; // Indica que no se pudo agregar el comentario
-				//   }
 				
 				  const requestOptions = {
 					method: "POST",
@@ -330,7 +233,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  return false; // Indica que no se pudo agregar el comentario
 				}
 			  },
-			  
+ 
+
+		loadCityWeather: (city) => {
+			return new Promise(async (resolve, reject) => {
+			  try {
+				const apiKey = "da3199df336942f8828210302232806";
+				const response = await fetch(
+				  `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
+				);
+				const data = await response.json();
+				resolve(data);
+			  } catch (error) {
+				console.error("Error loading city weather data:", error);
+				reject(error);
+			  }
+			});
+		  },
+		  
 		processAndSaveImage: async (file, selectedCountry) => {
 			try {
 				const formData = new FormData();
@@ -379,9 +299,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		loadCitiesByCountry: async (countryName) => {
 			try {
-				const response = await fetch(process.env.BACKEND_URL + '/api/cities/' + countryName);
-				const data = await response.json();
-				setStore({ cities: data.cities });
+			  const response = await fetch(process.env.BACKEND_URL + '/api/cities/'+ countryName);
+			  const data = await response.json();
+				console.log(data.cities)
+			 let aux = []
+			  for (let city in data.cities) {
+					aux.push(city.name)
+			  }
+			  setStore({ cities:aux });
+			  setStore({ selectedCountryCities: data.cities }); // Actualiza el estado 'cities' con los datos recibidos
 			} catch (error) {
 				console.error("Error loading cities:", error);
 			}
@@ -401,77 +327,129 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		deleteCountry: async (countryName) => {
 			try {
-				const requestOptions = {
-					method: 'DELETE',
-					headers: { 'Content-Type': 'application/json' }
-				};
-
-				const response = await fetch(`https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/country/${countryName}`, requestOptions);
-				if (response.ok) {
-					console.log('Country deleted successfully');
-					// Realiza cualquier otra acción necesaria después de eliminar el país
-				} else {
-					console.error('Error deleting country');
-				}
+			  const requestOptions = {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' }
+			  };
+	
+			  const response = await fetch(`${process.env.BACKEND_URL}/api/country/${countryName}`, requestOptions);
+			  if (response.ok) {
+				console.log('Country deleted successfully');
+				// Realiza cualquier otra acción necesaria después de eliminar el país
+			  } else {
+				console.error('Error deleting country');
+			  }
 			} catch (error) {
 				console.error('Error deleting country:', error);
 			}
 		},
 
-		processAndSaveImage: async (file, selectedCountry, setImageUrl) => {
+processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
 			try {
-				const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
-				const apiKey = '447623599368252';
-				const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
-				const folderName = 'ImagenesPais';
-
-				const formData = new FormData();
-				formData.append('file', file);
-				formData.append('upload_preset', 'images');
-				formData.append('folder', folderName);
-
-				const options = {
-					method: 'POST',
-					body: formData,
+			  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+			  const apiKey = '447623599368252';
+			  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+			  const folderName = 'ImagenesPais';
+		  
+			  const formData = new FormData();
+			  formData.append('file', file);
+			  formData.append('upload_preset', 'images');
+			  formData.append('folder', folderName);
+		  
+			  const options = {
+				method: 'POST',
+				body: formData,
+			  };
+		  
+			  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+			  if (response.ok) {
+				console.log('Imagen subida exitosamente');
+				const responseData = await response.json();
+				const imageUrl = responseData.secure_url;
+		  
+				console.log('URL de la imagen:', imageUrl);
+		  
+				const imageData = {
+				  country: selectedCountry,
+				  imageUrl: imageUrl,
 				};
-
-				const response = await fetch(apiUrl + '/image/upload', options);
-
-				if (response.ok) {
-					console.log('Imagen subida exitosamente');
-					const responseData = await response.json();
-					const imageUrl = responseData.secure_url;
-
-					console.log('URL de la imagen:', imageUrl);
-
-					const imageData = {
-						country: selectedCountry,
-						imageUrl: imageUrl,
-					};
-
-					const saveResponse = await fetch('https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/saveImageUrl', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(imageData),
-					});
-
-					if (saveResponse.ok) {
-						console.log('Imagen guardada en la base de datos');
-					} else {
-						console.error('Error al guardar la imagen en la base de datos');
-					}
+		  
+				const saveResponse = await fetch(`${process.env.BACKEND_URL}/api/saveImageUrl`, {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
+				  body: JSON.stringify(imageData),
+				});
+		  
+				if (saveResponse.ok) {
+				  console.log('Imagen guardada en la base de datos');
 				} else {
-					console.error('Error al subir la imagen');
+				  console.error('Error al guardar la imagen en la base de datos');
 				}
+			  } else {
+				console.error('Error al subir la imagen');
+			  }
 			} catch (error) {
-				console.error('Error al subir la imagen:', error);
+			  console.error('Error al subir la imagen:', error);
 			}
-		},
+		  },
 
-	}
-};
-};
-
-export default getState;
+		  processAndSaveCityImage : async (file, cityName) => {
+			try {
+			  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+			  const apiKey = '447623599368252';
+			  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+			  const folderName = 'ImagenesCiudad';
+		  
+			  const formData = new FormData();
+			  formData.append('file', file);
+			  formData.append('upload_preset', 'images');
+			  formData.append('folder', folderName);
+		  
+			  const options = {
+				method: 'POST',
+				body: formData,
+			  };
+		  
+			  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+			  if (response.ok) {
+				console.log('Imagen subida exitosamente');
+				const responseData = await response.json();
+				const imageUrl = responseData.secure_url;
+		  
+				console.log('URL de la imagen:', imageUrl);
+		  
+				const imageData = {
+				  city: cityName,
+				  imageUrl: imageUrl,
+				};
+		  
+				const saveResponse = await fetch(`${process.env.BACKEND_URL}/api/saveCityImageUrl`, {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
+				  body: JSON.stringify(imageData),
+				});
+		  
+				if (saveResponse.ok) {
+				  console.log('Imagen de la ciudad guardada en la base de datos');
+				} else {
+				  console.error('Error al guardar la imagen de la ciudad en la base de datos');
+				}
+			  } else {
+				console.error('Error al subir la imagen');
+			  }
+			} catch (error) {
+			  console.error('Error al subir la imagen:', error);
+			}
+		  },
+	  }
+	};
+  };
+  
+  
+  export default getState;

@@ -28,14 +28,22 @@ body{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 1rem; 
+    margin: 3rem;
     
   }
   .card-img-top {
     width: 100%; /* Ajusta el ancho según tus necesidades */
     height: 200px; /* Ajusta el alto según tus necesidades */
     object-fit: cover; 
-    border-radius: 3rem;
+    border-radius: 1rem;
     transition: filter 0.3s ease;
+  }
+
+  .img-fluid {
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+    height: 30rem;
+    margin-top: 2rem;
+    border-radius: 2rem;
   }
   /* .card-img-top:hover {
     filter: brightness(80%) hue-rotate(180deg); 
@@ -52,24 +60,27 @@ body{
     color: #3949AB;
   }
   .twocountry{
-    border-radius: 3rem;
+    border-radius: 1rem;
   }
   .more {
     background: #3949AB;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 0.5rem 0.5rem;
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: 0.5rem;
   }
   
   .more:hover {
     background-color:#41B3A3;
+    color:#533ce6
   }
   .datos{
-    font-size: 2rem;
+    font-size: 3rem;
+    font-family: 'Belanosima', sans-serif;
   }
 
   .close-button {
@@ -101,3 +112,238 @@ body{
     color:#3949AB
     
   }
+
+  
+  .form-select {
+    font-size: 16px; /* Ajusta el tamaño de la fuente */
+    height: 40px; /* Ajusta la altura del select */
+    margin-left: 32rem;
+    margin-bottom: 2rem;
+  }
+  
+.datospais{
+  font-size: 2.5rem;
+  font-family: 'Belanosima', sans-serif;
+  color:black
+}
+.resultpais{
+  font-size: 2.5rem;
+  font-family: 'Belanosima', sans-serif;
+  color:#3949AB
+}
+.container{
+  border-radius: 2rem;
+  background: #73e7d7;
+  margin-top: 2rem;
+
+}
+.save {
+  display: block; /* Hace que el botón sea un elemento de bloque */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  margin: 0 auto; /* Centra horizontalmente el botón */
+  font-size: 2rem;
+  border-radius: 1rem;
+}
+.add {
+  font-size: 16px; /* Ajusta el tamaño de la fuente */
+  padding: 10px 20px; /* Ajusta el espacio interno del botón */
+  margin-right: 10px; /* Establece un margen derecho para separarlo del botón adyacente */
+  /* Otros estilos adicionales */
+  background: #3949AB;
+  color: white;
+}
+.delete{
+  font-size: 16px; /* Ajusta el tamaño de la fuente */
+  padding: 10px 20px; /* Ajusta el espacio interno del botón */
+  margin-right: 10px; /* Establece un margen derecho para separarlo del botón adyacente */
+  /* Otros estilos adicionales */
+}
+.archivos{
+  font-size: 16px; /* Ajusta el tamaño de la fuente */
+  padding: 10px 20px; /* Ajusta el espacio interno del botón */
+  margin-right: 10px;
+}
+
+.upload{
+  font-size: 16px; /* Ajusta el tamaño de la fuente */
+  padding: 10px 20px; /* Ajusta el espacio interno del botón */
+  margin-right: 10px;
+}
+.img-city{
+  width: 50%; /* Ajusta el ancho según tus necesidades */
+    height: 200px; /* Ajusta el alto según tus necesidades */
+    border-radius: 3rem;
+    transition: filter 0.3s ease;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #063df1d5;
+}
+
+.login {
+  width: 300px;
+  padding: 20px;
+  background: #0b0ee493;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f1eeee;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.login input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background: #3948ab;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+  background: #31427a;
+}
+
+.btn-loginx{
+  width: 100%;
+  background: rgb(255, 200, 0);
+  font-size: 2rem;
+}
+
+.btn-loginx:hover{
+ background: orange;
+ color: white;
+
+}
+
+.ciudadimg{
+  width: 100%; /* Ajusta el ancho según tus necesidades */
+    height: 55rem; /* Ajusta el alto según tus necesidades */
+    border-radius: 3rem;
+    transition: filter 0.3s ease;
+
+}
+
+.cityinfo{
+  margin-top: 0rem;
+}
+
+/* .heart-icon {
+  color: transparent;
+  stroke: black;
+  stroke-width: 4rem;
+  font-size: 3rem;
+}
+.heart-icon:hover {
+  stroke: green;
+  fill: green;
+} */
+.heart-icon {
+  color: transparent;
+  stroke: black;
+  stroke-width: 4rem;
+  font-size: 3rem;
+  padding-right: 3rem;
+}
+
+.heart-icon:hover {
+  fill: rgb(128, 0, 0);
+  stroke: black;
+  color: red
+}
+
+.botones-ciudad{
+  padding-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+}
+.comment{
+  color: transparent;
+  stroke: black;
+  stroke-width: 4rem;
+  font-size: 3rem;
+  padding-right: 2rem;
+  
+}
+.comment:hover{
+  fill: green;
+  stroke: green;
+  color: rgba(5, 248, 5, 0.312);
+  
+}
+
+.btn-load-data {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-load-data:hover {
+  background-color: #45a049;
+}
+
+.btn-load-review {
+  background-color: #533ce6;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-load-review:hover {
+  background-color: #4565a0;
+}
+
+
+.datosciudad{
+  font-family: 'Belanosima', sans-serif;
+  font-size: 3rem;
+  
+}
+
+.ciudadresp{
+
+  color:#3949AB
+}
+
+.iconoclima{
+  height: 10rem;
+}
+.star-icon{
+  color: transparent;
+  stroke: black;
+  stroke-width: 4rem;
+  font-size: 3rem;
+  padding-right: 2rem;
+
+}
+
+.star-icon:hover{
+  fill: green;
+  stroke: black;
+  color: yellow;
+  
+}
