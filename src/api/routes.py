@@ -62,16 +62,31 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 #     return jsonify({'country_name': country.name, 'cities': cities}), 200
 
 
-from flask import Flask, request, jsonify, Blueprint
+# from flask import Flask, request, jsonify, Blueprint,send_file
+# from api.models import db, Country, City, User
+# from api.utils import generate_sitemap, APIException
+# from flask_jwt_extended import create_access_token
+# from flask_jwt_extended import get_jwt_identity
+# from flask_jwt_extended import jwt_required
+# from flask_jwt_extended import JWTManager
+
+
+
+# api = Blueprint('api', __name__)
+
+
+
+from flask import Flask, request, jsonify, Blueprint, send_file
 from api.models import db, Country, City, User
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 api = Blueprint('api', __name__)
-
+CORS(api)
 
 @api.route('/country', methods=['POST'])
 def create_country():
@@ -134,10 +149,14 @@ def get_countries():
 @api.route('/cities/<country_name>', methods=['GET'])
 def get_cities_by_country(country_name):
     country = Country.query.filter_by(name=country_name).first()
+    
 
     if country:
-        cities = [city.name for city in country.cities]
+        # cities = [city.name for city in country.cities]
+        cities= City.query.filter_by(country_id=country.id).all()
+
         if cities:
+            cities = list(map(lambda item: item.serialize(), cities))
             return jsonify({'country': country.name, 'cities': cities}), 200
         else:
             return jsonify({'message': 'No cities assigned to this country yet'}), 200
@@ -270,6 +289,60 @@ def save_image_url():
     else:
         return jsonify({'error': 'País no encontrado'})
     
+@api.route('/saveCityImageUrl', methods=['POST'])
+def save_city_image_url():
+    data = request.get_json()
+    city_name = data['city']
+    image_url = data['imageUrl']
+
+    # Buscar la ciudad en la base de datos por su nombre
+    city = City.query.filter_by(name=city_name).first()
+
+    if city:
+        # Actualizar el campo image_url de la ciudad encontrada
+        city.image_url = image_url
+        db.session.commit()
+        return jsonify({'message': 'URL de la imagen de la ciudad guardada en la base de datos'})
+    else:
+        return jsonify({'error': 'Ciudad no encontrada'})
+    
+@api.route('/getCityImageUrl/<city>', methods=['GET'])
+def get_city_image_url(city):
+    # Buscar la ciudad en la base de datos por su nombre
+    city_obj = City.query.filter_by(name=city).first()
+
+    if city_obj:
+        image_url = city_obj.image_url
+        return jsonify({'imageUrl': image_url})
+    else:
+        return jsonify({'error': 'Ciudad no encontrada'})
+    
+# @api.route('/getImageUrl/<country>', methods=['GET'])
+# def get_image_url(country):
+#     # Buscar el país en la base de datos por su nombre
+#     country_obj = Country.query.filter_by(name=country).first()
+
+#     if country_obj:
+#         image_url = country_obj.image_url
+#         return jsonify({'imageUrl': image_url})
+#     else:
+#         return jsonify({'error': 'País no encontrado'})
+
+# @api.route('/getImageUrl/<country>', methods=['GET'])
+# def get_image_url(country):
+#     # Buscar el país en la base de datos por su nombre
+#     country_obj = Country.query.filter_by(name=country).first()
+
+#     if country_obj:
+#         image_url = country_obj.image_url
+#         response = make_response(jsonify({'imageUrl': image_url}))
+#         response.headers['Access-Control-Allow-Origin'] =  'https://alejandrorivera2306-cautious-halibut-g9vxqpwvx97h9575-3001.preview.app.github.dev'
+#         response.headers['Access-Control-Allow-Methods'] = 'GET'
+#         response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+#         return response
+#     else:
+#         return jsonify({'error': 'País no encontrado'})
+
 @api.route('/getImageUrl/<country>', methods=['GET'])
 def get_image_url(country):
     # Buscar el país en la base de datos por su nombre
@@ -277,13 +350,13 @@ def get_image_url(country):
 
     if country_obj:
         image_url = country_obj.image_url
-        return jsonify({'imageUrl': image_url})
+        return jsonify({'imageUrl': image_url })
     else:
         return jsonify({'error': 'País no encontrado'})
 
 
 
-   
+
 
 @api.route('/hello2', methods=['POST', 'GET'])
 def hello2():

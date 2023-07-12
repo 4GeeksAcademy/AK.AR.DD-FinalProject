@@ -18,7 +18,8 @@ export const Admin = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container barra">
+      <h1 className="bestplace">Welcome <span className="bestpalcespan">Dashboard</span></h1>
       <form className="row row-cols-lg-auto g-3 align-items-center">
         <div className="col-12">
           <label className="visually-hidden" htmlFor="inlineFormSelectPref">
@@ -39,11 +40,11 @@ export const Admin = () => {
           </select>
         </div>
 
-        <div className="col-12">
+        {/* <div className="col-12">
           <button type="submit" className="btn btn-primary">
            SERCH COUNTRY
           </button>
-        </div>
+        </div> */}
       </form>
 
       <OneCountry selectedCountry={selectedCountry} />
