@@ -16,19 +16,14 @@ export const Navbar = () => {
   }
 
   return (
-    // <nav className="navbar bg-primary">
-      <nav className="navbar">
-       
+    <nav className="navbar">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          <img src={YMG} className=" logo" />
-         
+          <img src={YMG} className="logo" />
         </Link>
         <div className="ml-auto">
           {store.auth === true ? (
-            <button className="btn btn-logout title" onClick={() => handleLogout()}>
-          {/* {store.auth ? (
-            <button className="btn btn-logout" onClick={handleLogout}> */}
+            <button className="btn btn-logout title" onClick={handleLogout}>
               Logout
             </button>
           ) : (
@@ -44,13 +39,11 @@ export const Navbar = () => {
               </Link>
             </>
           )}
-          {/* <Link to="/admin">
-				    <button className="btn btn-warning">Admin</button>
-			    </Link> */}
         </div>
       </div>
     </nav>
   );
 };
+  
 
 

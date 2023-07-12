@@ -15,7 +15,7 @@ export const Login = () => {
     console.log("send Data");
     console.log(email, password);
     actions.login(email, password);
-    navigate("/demo"); 
+    navigate("/");
   }
 
   const handleForgotPasswordClick = () => {
@@ -25,7 +25,7 @@ export const Login = () => {
   return (
     <>
       {store.auth ? (
-        navigate("/demo")
+        navigate("/")
       ) : (
         <form className="container mt-3" onSubmit={sendData}>
           <div className="col-md-6">

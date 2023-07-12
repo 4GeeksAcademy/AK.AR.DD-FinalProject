@@ -12,8 +12,11 @@ import injectContext from "./store/appContext";
 import { Login } from "./component/login.jsx";
 import { Signup } from "./component/signup.jsx";
 import { OneCountry } from "./component/onecountry";
+import { Twocountry } from './component/twocountry';
+import { CommentFeed } from './component/comment.jsx';
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { CommentFeedPage } from "./pages/commentfeedpage.js";
 
 //create your first component
 const Layout = () => {
@@ -37,7 +40,9 @@ const Layout = () => {
                         <Route element={<OneCountry />} path="/onecountry" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Single />} path="/single/:theid" />
-
+                        <Route element={<Twocountry />} path="/" />
+                        <Route element={<CommentFeed />} path="/comment" />
+                        <Route element={<CommentFeedPage />} path="/commentfeedpage" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

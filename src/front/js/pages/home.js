@@ -26,7 +26,7 @@ export const Home = () => {
       </div>
     </div>
     <h1 className="bestplace">The best <span className="bestpalcespan">places</span></h1>
-    <div className="contenedorpais">
+    <div className="contenedorpais container">
   <Twocountry className="twocountry" />
 </div>
 

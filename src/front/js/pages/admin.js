@@ -19,7 +19,7 @@ export const Admin = () => {
 
   return (
     <div className="container">
-      <form className="row row-cols-lg-auto g-3 align-items-center">
+      <form className="row row-cols-lg-auto g-3 align-items-center mt-5">
         <div className="col-12">
           <label className="visually-hidden" htmlFor="inlineFormSelectPref">
             Preference
