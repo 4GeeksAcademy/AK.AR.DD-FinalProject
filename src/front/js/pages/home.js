@@ -19,16 +19,15 @@ export const Home = () => {
     <div className="mt-5">
       <div className="row container-fluid justify-content-center">
         <div className="col-1 mx-5">
-          
         </div>
         <div className="col-1">
         </div>
       </div>
     </div>
     <h1 className="bestplace">The best <span className="bestpalcespan">places</span></h1>
-    <div className="contenedorpais">
-  <Twocountry className="twocountry" />
-</div>
+    <div className="contenedorpais ">
+      <Twocountry className="twocountry" />
+    </div>
 
     </>
     

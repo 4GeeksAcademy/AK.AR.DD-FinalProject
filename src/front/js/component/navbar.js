@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../component/login.jsx";
 import { Signup } from "../component/signup.jsx";
+import { Ciudades } from "../pages/ciudades";
 import "../../styles/navbar.css";
 import YMG from "../../img/YMG-logo.png";
 
@@ -39,14 +40,13 @@ export const Navbar = () => {
               <Link to="/signup" className="btn btn-signup title">
                 Sign Up
               </Link>
-              <Link to="/admin">
-                <button className="btn btn-warning title">Admin</button>
-              </Link>
+             
+              {/* <Link to="/ciudades" className="btn btn-signup title">
+                ciudades
+              </Link> */}
             </>
           )}
-          {/* <Link to="/admin">
-				    <button className="btn btn-warning">Admin</button>
-			    </Link> */}
+          
         </div>
       </div>
     </nav>

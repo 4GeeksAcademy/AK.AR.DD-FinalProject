@@ -19,7 +19,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		],
 		options: [],
 		weatherData: null,
-		cities: []
+		cities: [],
+		selectedCountryCities:[]
 	  },
 	  actions: {
 		exampleFunction: () => {
@@ -158,18 +159,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		},
   
-		loadCityWeather: async (city) => {
-		  try {
-			const apiKey = "da3199df336942f8828210302232806";
-			const response = await fetch(
-			  `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
-			);
-			const data = await response.json();
-			return data;
-		  } catch (error) {
-			console.error("Error loading city weather data:", error);
-		  }
-		},
+		// loadCityWeather: async (city) => {
+		//   try {
+		// 	const apiKey = "da3199df336942f8828210302232806";
+		// 	const response = await fetch(
+		// 	  `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
+		// 	);
+		// 	const data = await response.json();
+		// 	return data;
+		//   } catch (error) {
+		// 	console.error("Error loading city weather data:", error);
+		//   }
+		// },
+
+		loadCityWeather: (city) => {
+			return new Promise(async (resolve, reject) => {
+			  try {
+				const apiKey = "da3199df336942f8828210302232806";
+				const response = await fetch(
+				  `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
+				);
+				const data = await response.json();
+				resolve(data);
+			  } catch (error) {
+				console.error("Error loading city weather data:", error);
+				reject(error);
+			  }
+			});
+		  },
+		  
   
 		processAndSaveImage: async (file, selectedCountry) => {
 		 //falta aqui. 
@@ -226,7 +244,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			try {
 			  const response = await fetch(process.env.BACKEND_URL + '/api/cities/'+ countryName);
 			  const data = await response.json();
-			  setStore({ cities: data.cities }); // Actualiza el estado 'cities' con los datos recibidos
+				console.log(data.cities)
+			 let aux = []
+			  for (let city in data.cities) {
+					aux.push(city.name)
+			  }
+			  setStore({ cities:aux });
+			  setStore({ selectedCountryCities: data.cities }); // Actualiza el estado 'cities' con los datos recibidos
 			} catch (error) {
 			  console.error("Error loading cities:", error);
 			}
@@ -249,7 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				headers: { 'Content-Type': 'application/json' }
 			  };
 	
-			  const response = await fetch(`https://alejandrorivera2306-orange-giggle-v4jpv57jpvq366vq-3001.preview.app.github.dev/api/country/${countryName}`, requestOptions);
+			  const response = await fetch(`${process.env.BACKEND_URL}/api/country/${countryName}`, requestOptions);
 			  if (response.ok) {
 				console.log('Country deleted successfully');
 				// Realiza cualquier otra acción necesaria después de eliminar el país
@@ -291,7 +315,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  imageUrl: imageUrl,
 				};
 		  
-				const saveResponse = await fetch('https://alejandrorivera2306-scaling-spoon-qr5vqxg5vggf9vg9-3001.preview.app.github.dev/api/saveImageUrl', {
+				const saveResponse = await fetch(`${process.env.BACKEND_URL}/api/saveImageUrl`, {
 				  method: 'POST',
 				  headers: {
 					'Content-Type': 'application/json',
@@ -312,6 +336,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		  },
 
+	
+		  processAndSaveCityImage : async (file, cityName) => {
+			try {
+			  const apiUrl = 'https://api.cloudinary.com/v1_1/dbaedcrtl';
+			  const apiKey = '447623599368252';
+			  const apiSecret = 't5cClrlERz7LBrJ21fLTn97lHgA';
+			  const folderName = 'ImagenesCiudad';
+		  
+			  const formData = new FormData();
+			  formData.append('file', file);
+			  formData.append('upload_preset', 'images');
+			  formData.append('folder', folderName);
+		  
+			  const options = {
+				method: 'POST',
+				body: formData,
+			  };
+		  
+			  const response = await fetch(apiUrl + '/image/upload', options);
+		  
+			  if (response.ok) {
+				console.log('Imagen subida exitosamente');
+				const responseData = await response.json();
+				const imageUrl = responseData.secure_url;
+		  
+				console.log('URL de la imagen:', imageUrl);
+		  
+				const imageData = {
+				  city: cityName,
+				  imageUrl: imageUrl,
+				};
+		  
+				const saveResponse = await fetch(`${process.env.BACKEND_URL}/api/saveCityImageUrl`, {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
+				  body: JSON.stringify(imageData),
+				});
+		  
+				if (saveResponse.ok) {
+				  console.log('Imagen de la ciudad guardada en la base de datos');
+				} else {
+				  console.error('Error al guardar la imagen de la ciudad en la base de datos');
+				}
+			  } else {
+				console.error('Error al subir la imagen');
+			  }
+			} catch (error) {
+			  console.error('Error al subir la imagen:', error);
+			}
+		  },
+		  
 		  
 		  
 
@@ -320,5 +397,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 	  }
 	};
   };
+  
   
   export default getState;

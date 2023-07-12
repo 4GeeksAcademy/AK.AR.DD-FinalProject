@@ -27,27 +27,17 @@ class Country(db.Model):
         return f'<Country {self.name}>'
 
     def serialize(self):
+        # cities =  City.query.filter_by(country_id=self.id).all()
+        # cities = list(map(lambda item: item.serialize(), cities))
         return {
             "id": self.id,
             "name": self.name,
-            "image_url": self.image_url  # Incluir el campo en el método serialize()
+            "image_url": self.image_url,  # Incluir el campo en el método serialize()
+            "cities": self.cities
         }
 
 
-# class City(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(120), unique=True, nullable=False)
-#     country_id = db.Column(db.Integer, db.ForeignKey('country.id'), nullable=False)
 
-#     def __repr__(self):
-#         return f'<City {self.name}>'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "name": self.name,
-#             "country_id": self.country_id,
-#         }
 
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)

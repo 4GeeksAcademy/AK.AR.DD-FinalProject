@@ -14,6 +14,11 @@ import { Signup } from "./component/signup.jsx";
 import { OneCountry } from "./component/onecountry";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { LoginAdmin } from "./component/loginadmin";
+import { Ciudades } from "./pages/ciudades";
+import { Twocountry } from "./component/twocountry";
+import { Country } from "./pages/country";
+
 
 //create your first component
 const Layout = () => {
@@ -36,7 +41,12 @@ const Layout = () => {
                         <Route element={<City />} path="/city" />
                         <Route element={<OneCountry />} path="/onecountry" />
                         <Route element={<Signup />} path="/signup" />
+                        {/* <Route element={<Ciudades />} path="/ciudades" /> */}
+                        <Route element={<Twocountry />  } path="/twocountry" />
+                        <Route element={<Ciudades />  } path="/ciudades" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<LoginAdmin />} path="/loginadmin" />
+                        <Route element={<Country />} path="/country/:name" />
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
