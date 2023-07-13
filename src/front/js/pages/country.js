@@ -60,11 +60,13 @@ import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { CommentFeed } from "../component/comment.jsx"
 
 
 export const Country = () => {
   const { store, actions } = useContext(Context);
   const { name } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     actions.loadCitiesByCountry(name); // Llama a la función loadCitiesByCountry con el nombre del país como argumento
@@ -84,6 +86,16 @@ export const Country = () => {
     }
   };
 
+    const sendData = (e) => {
+    e.preventDefault();
+    console.log("send Data");
+    navigate("/login");
+  };
+
+  const handleGoToCommentFeed = () => {
+    navigate("/comment");
+
+  }
   const selectedCountryCities = store.selectedCountryCities;
 
   return (
@@ -112,7 +124,9 @@ export const Country = () => {
                 <div className="botones-ciudad"> 
                
                 <button className="btn-load-data" onClick={() => loadCityWeatherData(city.name)}>Load Weather Data</button>
-                <button className="btn-load-review">Reviews</button>
+           <button type="button" className="btn btn-secondary" onClick={store.auth ? handleGoToCommentFeed : sendData}>
+                      Go to review section
+                      </button>
                 <div>
                 <FontAwesomeIcon className="comment" icon={faComment} />
                 <FontAwesomeIcon icon={faHeart} className="heart-icon" />

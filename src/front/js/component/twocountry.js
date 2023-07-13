@@ -15,7 +15,7 @@ export const Twocountry = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showCommentFeed, setShowCommentFeed] = useState(false);
   const [showCities, setShowCities] = useState(false);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     actions.loadCountries();
@@ -147,9 +147,7 @@ export const Twocountry = () => {
           {/* <button className="btn more" onClick={() => handleClickCities(pais.country_name)}>
             Ciudades
           </button> */}
-// <button type="button" className="btn btn-secondary" onClick={store.auth ? handleGoToCommentFeed : sendData}>
-//                         Go to review section
-//                       </button>
+
           <Link className="btn more" to={"/country/"+pais.country_name}> Ciudades </Link>
         </div>
       ))}

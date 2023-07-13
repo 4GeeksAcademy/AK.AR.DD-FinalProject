@@ -166,7 +166,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		getComments: async () => {
 			try {
-				const response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/comment", {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/comment`, {
 					headers: {
 						  "Content-Type": "application/json",
 						  "Authorization": "Bearer " + localStorage.getItem("token")
@@ -183,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		isAuth: async () => {
 			let response
 			try {
-				response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/profile", {
+				response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
 					headers: {
 						  "Content-Type": "application/json",
 						  "Authorization": "Bearer " + localStorage.getItem("token")
@@ -218,7 +218,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}),
 				  };
 				
-				  const response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/comment", requestOptions);
+				  const response = await fetch(`${process.env.BACKEND_URL}/api/comment`, requestOptions);
 				
 				  if (response.ok) {
 					const data = await response.json();
