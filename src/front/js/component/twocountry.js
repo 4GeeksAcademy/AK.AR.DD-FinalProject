@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../component/login.jsx";
 import { CommentFeed } from "../component/comment.jsx"
 import { Ciudades } from "../pages/ciudades.js";
+import { Comentario } from "../component/comentario.jsx";
 
 export const Twocountry = () => {
   const { store, actions } = useContext(Context);
@@ -89,15 +90,6 @@ export const Twocountry = () => {
     navigate("/");
   };
 
-//   const sendData = (e) => {
-//     e.preventDefault();
-//     console.log("send Data");
-//     navigate("/login");
-//   };
-
-//   const handleGoToCommentFeed = () => {
-//     navigate("/comment");
-
   const handleClickCountryInfo = async (countryName) => {
     setSelectedCountry(countryName);
     setShowCities(false); // Ocultar el componente "Ciudades"
@@ -147,9 +139,6 @@ export const Twocountry = () => {
           {/* <button className="btn more" onClick={() => handleClickCities(pais.country_name)}>
             Ciudades
           </button> */}
-// <button type="button" className="btn btn-secondary" onClick={store.auth ? handleGoToCommentFeed : sendData}>
-//                         Go to review section
-//                       </button>
           <Link className="btn more" to={"/country/"+pais.country_name}> Ciudades </Link>
         </div>
       ))}
@@ -163,7 +152,7 @@ export const Twocountry = () => {
           setShowCiudades={setShowCities}
         />
       )}
-      {showCommentFeed && <CommentFeed />} {/* Render the CommentFeed component when showCommentFeed is true */}
+      {showCommentFeed && <Comentario />} {/* Render the CommentFeed component when showCommentFeed is true */}
     </>
   );
 };
