@@ -151,39 +151,74 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		},
 
-// 		loadCityWeather: async (city) => {
-// 			try {
-// 				const apiKey = "da3199df336942f8828210302232806";
-// 				const response = await fetch(
-// 					`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
-// 				);
-// 				const data = await response.json();
-// 				return data;
-// 			} catch (error) {
-// 				console.error("Error loading city weather data:", error);
-// 			}
-// 		},
-
-		getComments: async () => {
+		loadCityWeather: async (city) => {
 			try {
-				const response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/comment", {
+				const apiKey = "da3199df336942f8828210302232806";
+				const response = await fetch(
+					`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
+				);
+				const data = await response.json();
+				return data;
+			} catch (error) {
+				console.error("Error loading city weather data:", error);
+			}
+		},
+
+		getComments: async (cityName) => {
+			try {
+				const response = await fetch(`https://deborahdobles-orange-sniffle-9vpx4qpx5qrfp755-3001.preview.app.github.dev/api/comment/${cityName}`, {
 					headers: {
-						  "Content-Type": "application/json",
-						  "Authorization": "Bearer " + localStorage.getItem("token")
-						},
-				  });
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + localStorage.getItem("token")
+					},
+				});
 				const data = await response.json();
 				setStore({ comments: data });
-				console.log(data)
+				console.log(data);
 			} catch (error) {
 				console.error("Error fetching comments:", error);
 			}
 		},
+	
+ 
+		addComment: async (content, cityId) => {
+			const store = getStore();
+			try {
+			  const token = localStorage.getItem("token");
+		  
+			  const requestOptions = {
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${token}`
+				},
+				body: JSON.stringify({
+				  "content": content,
+				  "user_email": store.user.email,
+				  "city_id": cityId
+				}),
+			  };
+		  
+			  const response = await fetch(`https://deborahdobles-orange-sniffle-9vpx4qpx5qrfp755-3001.preview.app.github.dev/api/comment`, requestOptions);
+		  
+			  if (response.ok) {
+				const data = await response.json();
+				console.log("This is the comment token: " + data);
+				console.log("Stored token: " + localStorage.getItem("token"));
+				return data;
+			  } else {
+				return false; // Indicates that the comment couldn't be added
+			  }
+			} catch (error) {
+			  console.error("Error adding comment:", error);
+			  return false; // Indicates that the comment couldn't be added
+			}
+		  },		  
 
 		isAuth: async () => {
 			let response
 			try {
-				response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/profile", {
+				response = await fetch("https://deborahdobles-orange-sniffle-9vpx4qpx5qrfp755-3001.preview.app.github.dev/api/profile", {
 					headers: {
 						  "Content-Type": "application/json",
 						  "Authorization": "Bearer " + localStorage.getItem("token")
@@ -200,39 +235,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.error("Error fetching comments:", error);
 			}
 		},
- 
-			addComment: async (content) => {
-				const store = getStore()
-				try {
-				  const token = localStorage.getItem("token");
-				
-				  const requestOptions = {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json",
-					  "Authorization": `Bearer ${token}`
-					},
-					body: JSON.stringify({
-					  "content": content,
-					  "user_email": store.user.email
-					}),
-				  };
-				
-				  const response = await fetch("https://deborahdobles-animated-fiesta-x6j4q9j4p44cp99w-3001.preview.app.github.dev/api/comment", requestOptions);
-				
-				  if (response.ok) {
-					const data = await response.json();
-					console.log("This is the comment token: " + data);
-					console.log("Stored token: " + localStorage.getItem("token"));
-					return data;
-				  } else {
-					return false; // Indica que no se pudo agregar el comentario
-				  }
-				} catch (error) {
-				  console.error("Error adding comment:", error);
-				  return false; // Indica que no se pudo agregar el comentario
-				}
-			  },
+		
  
 
 		loadCityWeather: (city) => {

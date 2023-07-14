@@ -13,7 +13,7 @@ import { Login } from "./component/login.jsx";
 import { Signup } from "./component/signup.jsx";
 import { OneCountry } from "./component/onecountry";
 import { Twocountry } from './component/twocountry';
-import { CommentFeed } from './component/comment.jsx';
+import { Comentario } from "./component/comentario.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { CommentFeedPage } from "./pages/commentfeedpage.js";
@@ -35,6 +35,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
+                    <div className="container-fluid">
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
@@ -47,13 +48,15 @@ const Layout = () => {
                         <Route element={<Twocountry />  } path="/twocountry" />
                         <Route element={<Ciudades />  } path="/ciudades" />
                         <Route element={<Single />} path="/single/:theid" />
-//                         <Route element={<Twocountry />} path="/" />
-                        <Route element={<CommentFeed />} path="/comment" />
-                        <Route element={<CommentFeedPage />} path="/commentfeedpage" />
+                        {/* <Route element={<Twocountry />} path="/" /> */}
+                        {/* <Route element={<CommentFeed />} path="/comment/:id" /> */}
+                        {/* <Route element={<CommentFeedPage />} path="/:city/commentfeedpage/" /> */}
                         <Route element={<LoginAdmin />} path="/loginadmin" />
                         <Route element={<Country />} path="/country/:name" />
+                        <Route element={<Comentario />} path="/:country/:city/comentario/" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
+                    </div>
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>

@@ -197,32 +197,6 @@ def get_city_image_url(city):
         return jsonify({'imageUrl': image_url})
     else:
         return jsonify({'error': 'Ciudad no encontrada'})
-    
-# @api.route('/getImageUrl/<country>', methods=['GET'])
-# def get_image_url(country):
-#     # Buscar el país en la base de datos por su nombre
-#     country_obj = Country.query.filter_by(name=country).first()
-
-#     if country_obj:
-#         image_url = country_obj.image_url
-#         return jsonify({'imageUrl': image_url})
-#     else:
-#         return jsonify({'error': 'País no encontrado'})
-
-# @api.route('/getImageUrl/<country>', methods=['GET'])
-# def get_image_url(country):
-#     # Buscar el país en la base de datos por su nombre
-#     country_obj = Country.query.filter_by(name=country).first()
-
-#     if country_obj:
-#         image_url = country_obj.image_url
-#         response = make_response(jsonify({'imageUrl': image_url}))
-#         response.headers['Access-Control-Allow-Origin'] =  'https://alejandrorivera2306-cautious-halibut-g9vxqpwvx97h9575-3001.preview.app.github.dev'
-#         response.headers['Access-Control-Allow-Methods'] = 'GET'
-#         response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-#         return response
-#     else:
-#         return jsonify({'error': 'País no encontrado'})
 
 @api.route('/getImageUrl/<country>', methods=['GET'])
 def get_image_url(country):
@@ -264,15 +238,39 @@ def get_comments():
         comments = list(map(lambda item: item.serialize(), comments))
     return jsonify(comments)
 
+@api.route("/comment/<city>", methods=["GET"])
+@jwt_required()
+def get_comments_city(city):
+    city_id = City.query.filter_by(name=city).first()
+    if city_id is None:
+        return jsonify({"message": "city not found"})
+    comments = Comment.query.filter_by(city=city_id).all()
+    if len(comments) == 0:
+        comments = {"message": 'No comments'}
+    else:
+        comments = list(map(lambda item: item.serialize(), comments))
+    return jsonify(comments)
+
+
 @api.route("/comment", methods=["POST"])
 @jwt_required()
 def create_comment():
-    new_comment_data = request.json
+    # new_comment_data = request.json
+    content = request.json["content"]
+    city_id = request.json["city_id"]
     email = get_jwt_identity()
-    new_comment = Comment(content=new_comment_data['content'], username=email)
+    user = User.query.filter_by(email=email).first()
+    # Retrieve the city with the given city_id
+    city = City.query.filter_by(name=city_id).first()
+
+    if user is None or city is None:
+        return jsonify({"message": "User or City not found"}), 404
+
+    new_comment = Comment(content=content, user_id=user.id, city_id=city.id)
     db.session.add(new_comment)
     db.session.commit()
     return jsonify({"message": "Comment created successfully"})
+
 
 @api.route("/comment", methods=["DELETE"])
 @jwt_required()
