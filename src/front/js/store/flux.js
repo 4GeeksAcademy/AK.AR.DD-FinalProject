@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		message: null,
 		paises: [],
 		countries: [],
+		favorites: [],
 		demo: [
 		  {
 			title: "FIRST",
@@ -192,6 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  if (response.ok){
 					const data = await response.json();
 					setStore({ user: data });
+					console.log(data)
 					setStore({ auth: true});
 				  } else {
 					setStore({auth: false}) 
@@ -447,6 +449,64 @@ processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
 			  console.error('Error al subir la imagen:', error);
 			}
 		  },
+
+		  addFavorite: async (city_id) => {
+			try {
+			  const token = localStorage.getItem("token");
+		  
+			  const requestOptions = {
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				  Authorization: `Bearer ${token}`
+				},
+				body: JSON.stringify({
+				  city_id: city_id
+				})
+			  };
+		  
+			  const response = await fetch(
+				`${process.env.BACKEND_URL}/api/favorites`,
+				requestOptions
+			  );
+		  
+			  if (response.ok) {
+				const data = await response.json();
+				console.log("Data:", data);
+				return data;
+			  } else {
+				return false; // Indicates that the favorite city could not be added
+			  }
+			} catch (error) {
+			  console.error("Error adding favorite city:", error);
+			  return false; // Indicates that the favorite city could not be added
+			}
+		  },
+
+		fetchFavoriteCities: async () => {
+			try {
+			  const token = localStorage.getItem("token");
+			  const requestOptions = {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  Authorization: `Bearer ${token}`
+				}
+			  };
+		
+			  const response = await fetch(`${process.env.BACKEND_URL}/api/favorites`, requestOptions);
+			  const data = await response.json();
+				console.log(data)
+			  if (response.ok) {
+				setStore({favorites: data});
+			  } else {
+				console.error("Failed to fetch favorite cities:", data);
+			  }
+			} catch (error) {
+			  console.error("Error fetching favorite cities:", error);
+			}
+		  },
+		  
 	  }
 	};
   };

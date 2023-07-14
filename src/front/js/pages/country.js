@@ -1,53 +1,3 @@
-// import React, { useContext, useEffect } from "react";
-// import { Link, useNavigate, useParams} from "react-router-dom";
-// import { Context } from "../store/appContext";
-// import rigoImageUrl from "../../img/rigo-baby.jpg";
-// import "../../styles/home.css";
-// import { Ciudades } from "./ciudades.js";
-
-// export const Country = () => {
-//   const { store, actions } = useContext(Context);
-//   const countryName = useParams()
-//   const selectedCountryCities = store.cities; 
-//   return (
-//     <>
-//     {countryName.name}
-//     </>
-//   );
-// };
-
-// import React, { useContext, useEffect } from "react";
-// import { Link, useNavigate, useParams } from "react-router-dom";
-// import { Context } from "../store/appContext";
-// import rigoImageUrl from "../../img/rigo-baby.jpg";
-// import "../../styles/home.css";
-// import { Ciudades } from "./ciudades.js";
-
-// export const Country = () => {
-//   const { store, actions } = useContext(Context);
-//   const { name } = useParams();
-
-//   useEffect(() => {
-//     actions.loadCitiesByCountry(name); // Llama a la función loadCitiesByCountry con el nombre del país como argumento
-//   }, [name]);
-
-//   const selectedCountryCities = store.selectedCountryCities;
-
-//   return (
-//     <>
-//       <h1>{name}</h1>
-//       {selectedCountryCities && selectedCountryCities.length > 0 ? (
-//         <ul>
-//           {selectedCountryCities.map((city, index) => (
-//             <li key={index}>{city.name}</li>
-//           ))}
-//         </ul>
-//       ) : (
-//         <p>No se encontraron ciudades para este país.</p>
-//       )}
-//     </>
-//   );
-// };
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -98,6 +48,11 @@ export const Country = () => {
   }
   const selectedCountryCities = store.selectedCountryCities;
 
+  const handleUser = (id) => {
+    actions.addFavorite(id)
+  }
+  console.log(selectedCountryCities)
+
   return (
     <>
       <h1 className="bestplace">{name}</h1>
@@ -109,7 +64,7 @@ export const Country = () => {
                 <h5 className="card-title">{city.name}</h5>
               </div>
               <div className="card-body cityinfo">
-              <img className="ciudadimg" src={store.selectedCountryCities[index].image_url} />
+                <img className="ciudadimg" src={store.selectedCountryCities[index].image_url} />
               
                 {cityWeatherData[city.name] && (
                   <>
@@ -123,20 +78,18 @@ export const Country = () => {
                 )}
                 <div className="botones-ciudad"> 
                
-                <button className="btn-load-data" onClick={() => loadCityWeatherData(city.name)}>Load Weather Data</button>
-           <button type="button" className="btn btn-secondary" onClick={store.auth ? handleGoToCommentFeed : sendData}>
-                      Go to review section
-                      </button>
-                <div>
-                <FontAwesomeIcon className="comment" icon={faComment} />
-                <FontAwesomeIcon icon={faHeart} className="heart-icon" />
-                <FontAwesomeIcon icon={faCircle} className="star-icon" />
-                <FontAwesomeIcon icon={faCircle} className="star-icon" />
-                <FontAwesomeIcon icon={faCircle} className="star-icon" />
-                <FontAwesomeIcon icon={faCircle} className="star-icon" />
-                <FontAwesomeIcon icon={faCircle} className="star-icon" />
-
-                </div>
+                  <button className="btn-load-data" onClick={() => loadCityWeatherData(city.name)}>
+                    Load Weather Data
+                  </button>
+                  <button type="button" className="btn btn-secondary" onClick={store.auth ? handleGoToCommentFeed : sendData}>
+                    Go to review section
+                  </button>
+                  <div>
+                    <FontAwesomeIcon className="comment" icon={faComment} />
+                    <FontAwesomeIcon icon={faHeart} className="heart-icon btn-add-favorite" onClick={() => handleUser(city.id)}/>
+                    
+                    <FontAwesomeIcon icon={faCircle} className="star-icon" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -149,6 +102,58 @@ export const Country = () => {
     </>
   );
 };
+
+// import React, { useContext, useEffect } from "react";
+// import { Link, useNavigate, useParams} from "react-router-dom";
+// import { Context } from "../store/appContext";
+// import rigoImageUrl from "../../img/rigo-baby.jpg";
+// import "../../styles/home.css";
+// import { Ciudades } from "./ciudades.js";
+
+// export const Country = () => {
+//   const { store, actions } = useContext(Context);
+//   const countryName = useParams()
+//   const selectedCountryCities = store.cities; 
+//   return (
+//     <>
+//     {countryName.name}
+//     </>
+//   );
+// };
+
+// import React, { useContext, useEffect } from "react";
+// import { Link, useNavigate, useParams } from "react-router-dom";
+// import { Context } from "../store/appContext";
+// import rigoImageUrl from "../../img/rigo-baby.jpg";
+// import "../../styles/home.css";
+// import { Ciudades } from "./ciudades.js";
+
+// export const Country = () => {
+//   const { store, actions } = useContext(Context);
+//   const { name } = useParams();
+
+//   useEffect(() => {
+//     actions.loadCitiesByCountry(name); // Llama a la función loadCitiesByCountry con el nombre del país como argumento
+//   }, [name]);
+
+//   const selectedCountryCities = store.selectedCountryCities;
+
+//   return (
+//     <>
+//       <h1>{name}</h1>
+//       {selectedCountryCities && selectedCountryCities.length > 0 ? (
+//         <ul>
+//           {selectedCountryCities.map((city, index) => (
+//             <li key={index}>{city.name}</li>
+//           ))}
+//         </ul>
+//       ) : (
+//         <p>No se encontraron ciudades para este país.</p>
+//       )}
+//     </>
+//   );
+// };
+
 
 
 

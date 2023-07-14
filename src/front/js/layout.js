@@ -35,25 +35,27 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Admin />} path="/admin" />
-                        <Route element={<City />} path="/city" />
-                        <Route element={<OneCountry />} path="/onecountry" />
-                        <Route element={<Signup />} path="/signup" />
-                        {/* <Route element={<Ciudades />} path="/ciudades" /> */}
-                        <Route element={<Twocountry />  } path="/twocountry" />
-                        <Route element={<Ciudades />  } path="/ciudades" />
-                        <Route element={<Single />} path="/single/:theid" />
-//                         <Route element={<Twocountry />} path="/" />
-                        <Route element={<CommentFeed />} path="/comment" />
-                        <Route element={<CommentFeedPage />} path="/commentfeedpage" />
-                        <Route element={<LoginAdmin />} path="/loginadmin" />
-                        <Route element={<Country />} path="/country/:name" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
+                        <div className="container-fluid">
+                            <Routes>
+                                <Route element={<Home />} path="/" />
+                                <Route element={<Demo />} path="/demo" />
+                                <Route element={<Login />} path="/login" />
+                                <Route element={<Admin />} path="/admin" />
+                                <Route element={<City />} path="/city" />
+                                <Route element={<OneCountry />} path="/onecountry" />
+                                <Route element={<Signup />} path="/signup" />
+                                {/* <Route element={<Ciudades />} path="/ciudades" /> */}
+                                <Route element={<Twocountry />  } path="/twocountry" />
+                                <Route element={<Ciudades />  } path="/ciudades" />
+                                <Route element={<Single />} path="/single/:theid" />
+                                {/* <Route element={<Twocountry />} path="/" /> */}
+                                <Route element={<CommentFeed />} path="/comment" />
+                                <Route element={<CommentFeedPage />} path="/commentfeedpage" />
+                                <Route element={<LoginAdmin />} path="/loginadmin" />
+                                <Route element={<Country />} path="/country/:name" />
+                                <Route element={<h1>Not found!</h1>} />
+                            </Routes>
+                        </div>
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>
