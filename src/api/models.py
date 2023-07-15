@@ -37,6 +37,10 @@ class City(db.Model):
             "country_id": self.country_id,
             "image_url": self.image_url
         }
+    def serialize_id(self):
+        return {
+            "id": self.id,
+        }
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,14 +79,13 @@ class Favorites(db.Model):
 #                                 db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
 #                                 db.Column('city_id', db.Integer, db.ForeignKey('city.id'), primary_key=True))
 
-
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)  # Changed to 'city_id'
 
-    def _repr_(self):
+    def __repr__(self):
         
         return f'<Comment {self.id}>'
 
@@ -93,4 +96,4 @@ class Comment(db.Model):
             "content": self.content,
             "city_id": self.city_id,  # Changed to 'city_id'
             "user": user.serialize()
-        }
+        }    

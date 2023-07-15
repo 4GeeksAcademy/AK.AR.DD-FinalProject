@@ -271,6 +271,7 @@ def create_comment():
     db.session.commit()
     return jsonify({"message": "Comment created successfully"})
 
+
 @api.route("/comment", methods=["DELETE"])
 @jwt_required()
 def delete_comment():

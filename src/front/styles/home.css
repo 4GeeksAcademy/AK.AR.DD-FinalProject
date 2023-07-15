@@ -270,19 +270,12 @@ body{
   justify-content: space-between;
 }
 .comment{
-  
   stroke: black;
   stroke-width: 4rem;
   font-size: 3rem;
   padding-right: 2rem;
   
 }
-/* .comment:hover{
-  fill: green;
-  stroke: green;
-  color: rgba(5, 248, 5, 0.312);
-  
-} */
 
 .btn-load-data {
   background-color: #4caf50;
