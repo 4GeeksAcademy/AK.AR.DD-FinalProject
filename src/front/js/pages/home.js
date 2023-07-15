@@ -6,6 +6,7 @@ import { Twocountry } from "../component/twocountry";
 import { CiudadxCountry } from "../component/ciudadxcountry";
 import "../../styles/home.css";
 import { CitybyCountry } from "../component/citybycountry";
+import { FavoriteCities } from "../component/favoritecities";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -26,11 +27,11 @@ export const Home = () => {
     </div>
     <h1 className="bestplace">The best <span className="bestpalcespan">places</span></h1>
     <div className="contenedorpais container">
-  <Twocountry className="twocountry" />
-</div>
-
+      <Twocountry className="twocountry" />
+    </div>
+    <div>
+      <FavoriteCities />
+    </div>
     </>
-    
-
   );
 };

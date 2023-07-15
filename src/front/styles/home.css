@@ -276,12 +276,6 @@ body{
   padding-right: 2rem;
   
 }
-.comment:hover{
-  fill: black;
-  stroke: black;
-  color: black;
-  
-}
 
 .btn-load-data {
   background-color: #4caf50;

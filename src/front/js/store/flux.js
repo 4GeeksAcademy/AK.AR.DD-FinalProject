@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		message: null,
 		paises: [],
 		countries: [],
+		favorites: [],
 		demo: [
 		  {
 			title: "FIRST",
@@ -166,7 +167,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		getComments: async (cityName) => {
 			try {
-				const response = await fetch(`https://deborahdobles-orange-sniffle-9vpx4qpx5qrfp755-3001.preview.app.github.dev/api/comment/${cityName}`, {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/comment/${cityName}`, {
 					headers: {
 						"Content-Type": "application/json",
 						"Authorization": "Bearer " + localStorage.getItem("token")
@@ -199,7 +200,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}),
 			  };
 		  
-			  const response = await fetch(`https://deborahdobles-orange-sniffle-9vpx4qpx5qrfp755-3001.preview.app.github.dev/api/comment`, requestOptions);
+			  const response = await fetch(`${process.env.BACKEND_URL}/api/comment`, requestOptions);
 		  
 			  if (response.ok) {
 				const data = await response.json();
@@ -218,7 +219,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		isAuth: async () => {
 			let response
 			try {
-				response = await fetch("https://deborahdobles-orange-sniffle-9vpx4qpx5qrfp755-3001.preview.app.github.dev/api/profile", {
+				response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
 					headers: {
 						  "Content-Type": "application/json",
 						  "Authorization": "Bearer " + localStorage.getItem("token")
@@ -227,6 +228,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  if (response.ok){
 					const data = await response.json();
 					setStore({ user: data });
+					console.log(data)
 					setStore({ auth: true});
 				  } else {
 					setStore({auth: false}) 
@@ -235,7 +237,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.error("Error fetching comments:", error);
 			}
 		},
-		
+ 
+		addComment: async (content, cityId) => {
+			const store = getStore();
+			try {
+			  const token = localStorage.getItem("token");
+		  
+			  const requestOptions = {
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${token}`
+				},
+				body: JSON.stringify({
+				  "content": content,
+				  "user_email": store.user.email,
+				  "city_id": cityId
+				}),
+			  };
+		  
+			  const response = await fetch(`${process.env.BACKEND_URL}/api/comment`, requestOptions);
+		  
+			  if (response.ok) {
+				const data = await response.json();
+				console.log("This is the comment token: " + data);
+				console.log("Stored token: " + localStorage.getItem("token"));
+				return data;
+			  } else {
+				return false; // Indicates that the comment couldn't be added
+			  }
+			} catch (error) {
+			  console.error("Error adding comment:", error);
+			  return false; // Indicates that the comment couldn't be added
+			}
+		  },
  
 
 		loadCityWeather: (city) => {
@@ -450,6 +485,64 @@ processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
 			  console.error('Error al subir la imagen:', error);
 			}
 		  },
+
+		  addFavorite: async (city_id) => {
+			try {
+			  const token = localStorage.getItem("token");
+		  
+			  const requestOptions = {
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				  Authorization: `Bearer ${token}`
+				},
+				body: JSON.stringify({
+				  city_id: city_id
+				})
+			  };
+		  
+			  const response = await fetch(
+				`${process.env.BACKEND_URL}/api/favorites`,
+				requestOptions
+			  );
+		  
+			  if (response.ok) {
+				const data = await response.json();
+				console.log("Data:", data);
+				return data;
+			  } else {
+				return false; // Indicates that the favorite city could not be added
+			  }
+			} catch (error) {
+			  console.error("Error adding favorite city:", error);
+			  return false; // Indicates that the favorite city could not be added
+			}
+		  },
+
+		fetchFavoriteCities: async () => {
+			try {
+			  const token = localStorage.getItem("token");
+			  const requestOptions = {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  Authorization: `Bearer ${token}`
+				}
+			  };
+		
+			  const response = await fetch(`${process.env.BACKEND_URL}/api/favorites`, requestOptions);
+			  const data = await response.json();
+				console.log(data)
+			  if (response.ok) {
+				setStore({favorites: data});
+			  } else {
+				console.error("Failed to fetch favorite cities:", data);
+			  }
+			} catch (error) {
+			  console.error("Error fetching favorite cities:", error);
+			}
+		  },
+		  
 	  }
 	};
   };

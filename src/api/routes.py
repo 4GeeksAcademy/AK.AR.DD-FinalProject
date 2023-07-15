@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint, send_file
-from api.models import db, Country, City, User, Comment
+from api.models import db, Country, City, User, Comment, Favorites
 
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
@@ -197,7 +197,7 @@ def get_city_image_url(city):
         return jsonify({'imageUrl': image_url})
     else:
         return jsonify({'error': 'Ciudad no encontrada'})
-
+    
 @api.route('/getImageUrl/<country>', methods=['GET'])
 def get_image_url(country):
     # Buscar el país en la base de datos por su nombre
@@ -277,3 +277,63 @@ def create_comment():
 def delete_comment():
 
     return jsonify({"message": "Comment deleted successfully"})
+
+@api.route('/favorites', methods=['POST'])
+@jwt_required()
+def add_favorite_city():
+    city_id = request.json.get("city_id", None)
+
+    current_user = get_jwt_identity()
+    user_id = User.query.filter_by(email=current_user).first().id
+    city_id = city_id
+
+    # Create a new Favorites object
+    favorite = Favorites(user_id=user_id, city_id=city_id)
+
+    try:
+        # Add the new favorite to the database
+        db.session.add(favorite)
+        db.session.commit()
+        return jsonify({"message": "Favorite created successfully"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Failed to create favorite", "error": str(e)}), 500
+    finally:
+        db.session.close()
+
+@api.route('/favorites', methods=['GET'])
+@jwt_required()
+def get_favorite_cities():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    favorites = Favorites.query.filter_by(user_id=user.id).all()
+    
+    if len(favorites) == 0:
+        return jsonify({"message": "Favorites not found"}), 404
+    
+    favorite_cities = list(map(lambda item: item.serialize(), favorites))
+    return jsonify(favorite_cities), 200
+
+
+
+
+# @api.route("/users/favorite_cities", methods=["POST"])
+# @jwt_required()
+# def add_favorite_city():
+#     city_id = request.json.get("city_id", None)
+
+#     current_user = get_jwt_identity()
+#     user = User.query.filter_by(email=current_user).first()
+#     city = City.query.get(city_id)
+
+#     if user is None or city is None:
+#         return jsonify({"msg": "User or city not found"}), 404
+
+#     user.favorite_cities.append(city)
+#     db.session.commit()
+
+#     return jsonify({"msg": "City added to favorites"}), 200

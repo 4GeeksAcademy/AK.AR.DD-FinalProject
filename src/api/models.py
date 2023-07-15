@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 db = SQLAlchemy()
 
@@ -23,7 +24,8 @@ class City(db.Model):
     name = db.Column(db.String(120), unique=True, nullable=False)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'), nullable=False)
     image_url = db.Column(db.String(255))
-    comments = db.relationship('Comment', backref='city', lazy=True)  # Changed to 'comments'
+    comments = db.relationship('Comment', backref='city', lazy=True)
+    favorite_cities = db.relationship('Favorites', backref='city', lazy='dynamic')
 
     def __repr__(self):
         return f'<City {self.name}>'
@@ -45,10 +47,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    favorite_countries = db.relationship('Country', secondary='user_favorite_countries',
-                                         backref=db.backref('favorited_by', lazy='dynamic'))
-    favorite_cities = db.relationship('City', secondary='user_favorite_cities',
-                                      backref=db.backref('favorited_by', lazy='dynamic'))
+    favorite_cities = db.relationship('Favorites', backref='user', lazy='dynamic')
     user_comments = db.relationship('Comment', backref='user', lazy=True)
 
     def __repr__(self):
@@ -60,13 +59,25 @@ class User(db.Model):
             "email": self.email,
         }
 
-user_favorite_countries = db.Table('user_favorite_countries',
-                                   db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-                                   db.Column('country_id', db.Integer, db.ForeignKey('country.id'), primary_key=True))
+class Favorites(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
 
-user_favorite_cities = db.Table('user_favorite_cities',
-                                db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-                                db.Column('city_id', db.Integer, db.ForeignKey('city.id'), primary_key=True))
+    def __repr__(self):
+        return f'<Favorites {self.city_id}>'
+
+    def serialize(self):
+        city = City.query.get(self.city_id)
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "city": city.serialize()
+        }
+
+# user_favorite_cities = db.Table('user_favorite_cities',
+#                                 db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+#                                 db.Column('city_id', db.Integer, db.ForeignKey('city.id'), primary_key=True))
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

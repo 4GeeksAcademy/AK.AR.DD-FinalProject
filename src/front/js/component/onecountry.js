@@ -1078,7 +1078,7 @@ export const OneCountry = ({ selectedCountry }) => {
   };
 
   const fetchCountryImage = (country) => {
-    const countryUrl = `https://alejandrorivera2306-cautious-halibut-g9vxqpwvx97h9575-3001.preview.app.github.dev/api/getImageUrl/${country}`;
+    const countryUrl = `${process.env.BACKEND_URL}/api/getImageUrl/${country}`;
 
     fetch(countryUrl)
       .then(response => response.json())

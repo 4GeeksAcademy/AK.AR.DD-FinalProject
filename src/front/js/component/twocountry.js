@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../component/login.jsx";
-import { CommentFeed } from "../component/comment.jsx"
 import { Ciudades } from "../pages/ciudades.js";
 import { Comentario } from "../component/comentario.jsx";
 
@@ -16,7 +15,7 @@ export const Twocountry = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showCommentFeed, setShowCommentFeed] = useState(false);
   const [showCities, setShowCities] = useState(false);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     actions.loadCountries();

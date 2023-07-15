@@ -235,11 +235,6 @@ export const Comentario = () => {
     setNewComment(event.target.value);
   };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setNewImage(file);
-  };
-
   const handlePostComment = async () => {
     if (newComment === "") {
       return;
@@ -262,26 +257,6 @@ export const Comentario = () => {
     <div>
       {/* Comment input and image upload */}
       <div className="mb-3 mt-3 container">
-        <div className="comment-toolbar mb-2 d-flex justify-content-between">
-          <div className="toolbar-left">
-            {/* Toolbar buttons */}
-            <button className="btn btn-outline-primary me-2">
-              <FontAwesomeIcon icon={faBold} />
-            </button>
-            <button className="btn btn-outline-primary me-2">
-              <FontAwesomeIcon icon={faUnderline} />
-            </button>
-            <button className="btn btn-outline-primary me-2">
-              <FontAwesomeIcon icon={faListUl} />
-            </button>
-            <button className="btn btn-outline-primary me-2">
-              <FontAwesomeIcon icon={faListOl} />
-            </button>
-            <button className="btn btn-outline-primary me-2">
-              <FontAwesomeIcon icon={faHeading} />
-            </button>
-          </div>
-        </div>
         <textarea
           value={newComment}
           onChange={handleCommentChange}
@@ -289,7 +264,6 @@ export const Comentario = () => {
           placeholder="Enter your comment"
         ></textarea>
         <div className="d-flex justify-content-between mt-2">
-          <input type="file" onChange={handleImageChange} className="form-control" />
           <button onClick={handlePostComment} className="btn btn-primary">
             Post Comment
           </button>
