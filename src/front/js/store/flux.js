@@ -519,6 +519,40 @@ processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
 			}
 		  },
 
+		deleteFavorite : async (city_id) => {
+			try {
+			  const token = localStorage.getItem("token");
+		  
+			  const requestOptions = {
+				method: "DELETE",
+				headers: {
+				  "Content-Type": "application/json",
+				  Authorization: `Bearer ${token}`
+				}
+			  };
+		  
+			  console.log("Deleting city with ID:", city_id); // Log the city_id being deleted
+		  
+			  const response = await fetch(
+				`${process.env.BACKEND_URL}/api/favorites/${city_id}`,
+				requestOptions
+			  );
+		  
+			  if (response.ok) {
+				const data = await response.json();
+				console.log("Favorite deleted successfully. Response:", data);
+				return true; // Indicates that the favorite city was deleted successfully
+			  } else {
+				console.log("Failed to delete favorite. Response:", response);
+				return false; // Indicates that the favorite city could not be deleted or not found
+			  }
+			} catch (error) {
+			  console.error("Error deleting favorite city:", error);
+			  return false; // Indicates that an error occurred while trying to delete the favorite city
+			}
+		  },
+		  
+
 		fetchFavoriteCities: async () => {
 			try {
 			  const token = localStorage.getItem("token");
@@ -540,6 +574,35 @@ processAndSaveImage : async (file, selectedCountry, setImageUrl) => {
 			  }
 			} catch (error) {
 			  console.error("Error fetching favorite cities:", error);
+			}
+		  },
+
+
+
+		  getAllFavoriteCities : async () => {
+			try {
+			  const token = localStorage.getItem("token");
+			  const requestOptions = {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  Authorization: `Bearer ${token}`,
+				},
+			  };
+		  
+			  const response = await fetch(`${process.env.BACKEND_URL}/api/allfavorites`, requestOptions);
+			  const data = await response.json();
+			  
+			  if (response.ok) {
+				console.log(data); // Aquí tienes la lista de todos los favoritos sin importar el usuario
+				return data;
+			  } else {
+				console.error("Failed to fetch all favorite cities:", data);
+				return [];
+			  }
+			} catch (error) {
+			  console.error("Error fetching all favorite cities:", error);
+			  return [];
 			}
 		  },
 		  

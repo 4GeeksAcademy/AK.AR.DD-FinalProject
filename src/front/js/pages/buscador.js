@@ -1,91 +1,79 @@
-import React, { useState, useContext, useRef } from "react";
+
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export const Buscador = ({ selectedCountry, handleSaveCity }) => {
   const { actions } = useContext(Context);
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
-
-  const fileInputRef = useRef(null);
+  const [searched, setSearched] = useState(false);
 
   const handleSearchCity = async () => {
     const data = await actions.loadCityWeather(city);
     setWeatherData(data);
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    actions.processAndSaveImage(file, selectedCountry);
-  };
-
-  const handleSelectFiles = () => {
-    fileInputRef.current.click();
+    setSearched(true);
   };
 
   const handleCitySave = () => {
     const cityData = {
       name: city,
-      weather: weatherData
+      weather: weatherData,
     };
     handleSaveCity(cityData);
   };
 
+  const handleClearSearch = () => {
+    setCity("");
+    setWeatherData(null);
+    setSearched(false);
+  };
+
   return (
-    <div className="container-fluid">
-
-
-        <h4 htmlFor="formGroupExampleInput" className="form-label">
-          City
-        </h4>
-        <div className="row">
-          <div className="col-4">
+    <div className="container">
+      <div className="row">
+        <div className="barrabuscador">
+          <div className="input-group">
+            <span className="input-group-text">
+              <FontAwesomeIcon icon={faSearch} />
+            </span>
             <input
               type="text"
               className="form-control"
               id="formGroupExampleInput"
-              placeholder="Name City"
+              placeholder=" Name City "
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
           </div>
-          <div className="col-2">
-            <button type="button" className="btn btn-warning" onClick={handleSearchCity}>Buscar ciudad</button>
-          </div>
         </div>
-        <br />
-        <div className="mx-2">
-          <h5>Name: {weatherData && weatherData.location.name}</h5>
-          <h5>Region: {weatherData && weatherData.location.region}</h5>
-          <h5>Currency:</h5>
-          <h5>Country: {weatherData && weatherData.location.country}</h5>
-          <h5>Local Time: {weatherData && weatherData.location.localtime}</h5>
-          <h5>Weather: {weatherData && weatherData.current.condition.text}</h5>
-          <h5>Degree centigrade: {weatherData && weatherData.current.temp_c}°C</h5>
-        </div>
-
-        <div className="mx-2 mb-3">
-          <label htmlFor="uploadImage" className="form-label">
-            Upload Photo
-          </label>
-
-          <input
-            type="file"
-            className="form-control"
-            id="uploadImage"
-            onChange={handleFileChange}
-            accept="image/*"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-          />
-          <button type="button" className="btn btn-primary mx-2" onClick={handleSelectFiles}>
-            Select files
+        <div className="col-2">
+          <button type="button" className="btn btn-warning botonbuscador" onClick={handleSearchCity}>
+            Search City
           </button>
         </div>
+        {searched && (
+          <div className="col-1">
+            <button type="button" className="btn btn-dark" onClick={handleClearSearch}>
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </div>
+        )}
+      </div>
+      <br />
 
-        <button type="button" className="btn btn-success" onClick={handleCitySave}>
-          Save City
-        </button>
-
+      {searched && weatherData && (
+        <div className="mx-2">
+          <h5 className="contenidobuscador">Name: {weatherData.location.name}</h5>
+          <h5 className="contenidobuscador">Region: {weatherData.location.region}</h5>
+          <h5 className="contenidobuscador">Country: {weatherData.location.country}</h5>
+          <h5 className="contenidobuscador">Local Time: {weatherData.location.localtime}</h5>
+          <h5 className="contenidobuscador">Weather: {weatherData.current.condition.text}</h5>
+          <h5 className="contenidobuscador">Degree centigrade: {weatherData.current.temp_c}°C</h5>
+        </div>
+      )}
     </div>
   );
 };
+

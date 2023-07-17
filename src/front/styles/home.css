@@ -117,7 +117,7 @@ body{
   .form-select {
     font-size: 16px; /* Ajusta el tamaño de la fuente */
     height: 40px; /* Ajusta la altura del select */
-    margin-left: 32rem;
+    /* margin-left: 32rem; */
     margin-bottom: 2rem;
   }
   
@@ -263,6 +263,36 @@ body{
   stroke: black;
   color: red
 }
+.iconcomment{
+  color: transparent;
+  stroke: black;
+  stroke-width: 4rem;
+  font-size: 3rem;
+  padding-right: 3rem;
+
+}
+.iconcomment:hover {
+  fill: rgb(128, 0, 0);
+  stroke: black;
+  color: green
+
+}
+
+.iconbroken{
+  color: transparent;
+  stroke: black;
+  stroke-width: 4rem;
+  font-size: 3rem;
+  padding-right: 3rem;
+
+}
+.iconbroken:hover{
+  fill: rgb(128, 0, 0);
+  stroke: black;
+  color: #5f48f2
+
+}
+
 
 .botones-ciudad{
   padding-top: 3rem;
@@ -334,4 +364,170 @@ body{
   stroke: black;
   color: yellow;
   
+}
+
+.favoritesciudades{
+  border-radius: 1rem;
+  flex: 0 0 25%;
+  margin-right: 1rem;
+
+}
+
+.favoritesciudades:hover {
+  transform: scale(1.05); /* Escala el componente al 105% */
+  transition: transform 0.3s ease; /* Agrega una transición suave */
+  /* background-color:#04f80c41 ; */ 
+}
+.fondociudades{
+  background: blue
+
+}
+
+/* .contenedorciudad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem; 
+  margin: 5rem;
+  background: #45a049;
+  padding: 4rem;
+  
+} */
+
+/* .contenedorciudad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  margin: 5rem;
+  background: #45a049;
+  padding: 4rem;
+  overflow-x: auto;
+} */
+
+.contenedorciudad {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 5rem;
+  background: #3949AB;
+  padding: 5rem;
+  overflow-x: auto;
+  border-radius: 1rem;
+  margin-top: 0rem;
+
+}
+
+.iconcities{
+
+  color: transparent;
+  stroke: black;
+  stroke-width: 4rem;
+  font-size: 3rem;
+  padding-right: 3rem;
+}
+.iconcities:hover {
+  fill: rgb(128, 0, 0);
+  stroke: black;
+  color: #48f2ea
+
+}
+
+.baner {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 55rem;
+  width: 100%; /* Agrega esta propiedad para asegurar que ocupe todo el ancho */
+  padding: 2rem;
+  border-radius: 4rem;
+  
+}
+
+
+
+
+
+
+/* CSS para el componente Buscador */
+.buscador-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 8rem;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.buscador-content {
+  /* Ajusta los valores de padding y margin según sea necesario para aumentar el tamaño del contenedor del buscador */
+  padding: 2rem;
+  margin: 2rem;
+  border-radius: 1rem;
+  /* background-color: rgba(255, 255, 255, 0.636);  */
+}
+
+
+
+/* CSS para la imagen .baner */
+.baner {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 55rem;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 4rem;
+  position: relative;
+}
+.barrabuscador{
+  width: 80rem;
+}
+
+.barrabuscador input{
+  height: 8rem;
+  border-radius: 2rem;
+  font-size: 2rem;
+  
+}
+.botonbuscador{
+  height: 5rem;
+  border-radius: 2rem;
+  font-size: 2rem;
+  margin-top: 1rem;
+
+}
+.contenidobuscador{
+  color: white;
+  font-size: 3rem;
+}
+
+.textareacoment{
+ height: 20rem;
+ font-size: 5rem;
+ border-radius: 2rem;
+}
+.textuser{
+  font-size: 1.5rem;
+}
+.header-comment{
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  font-family: 'Belanosima', sans-serif;
+  
+}
+.namecommentcountry {
+  font-size: 6rem;
+}
+.namecommentcity {
+  font-size: 3rem;
+  color :#3949AB
+}
+.postcomment{
+  font-size: 2rem;
+  border-radius: 1rem;  
+  margin-bottom: 2rem;
+}
+.textcommentuser{
+  border-radius: 1rem;
 }
