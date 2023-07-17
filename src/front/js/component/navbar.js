@@ -35,10 +35,6 @@ export const Navbar = () => {
               <Link to="/signup" className="btn btn-signup title">
                 Sign Up
               </Link>
-             
-              {/* <Link to="/ciudades" className="btn btn-signup title">
-                ciudades
-              </Link> */}
             </>
           )}
         </div>

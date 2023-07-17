@@ -112,6 +112,7 @@ export const OneCountry = ({ selectedCountry }) => {
                     <img src={store.weatherData.current.condition.icon} alt="Weather Icon" />
                   </>
                 )}
+                <p><strong>Step 2: Press the "Add a city" button to add a city below</strong></p>
                 <button type="button" className="btn add" onClick={handleAddCity}>
                   Add a city
                 </button>
@@ -138,7 +139,6 @@ export const OneCountry = ({ selectedCountry }) => {
           UPDATE CITY
         </div>
       )}
-
       {cityDataList.map((cityData, index) => (
         <div key={index}>
           <h2>City: {cityData.name}</h2>
@@ -151,10 +151,12 @@ export const OneCountry = ({ selectedCountry }) => {
 
       {cityAdded && !showAlert && (
         <div className="alert alert-success" role="alert">
-          Ciudad Agregada
+          City was added successfully
+          <p><strong>Step 5: Once you've added the city, remember to upload an image for the country 
+        and cities, but remember to click on the "Save Changes" button every time an image is uploaded (and also click on 
+        "Save city" button if an image of a city is uploaded).</strong></p>
         </div>
       )}
-
       <button type="button" className="btn btn-success save" onClick={handleSaveToDatabase} disabled={!cityAdded}>
         Save changes
       </button>

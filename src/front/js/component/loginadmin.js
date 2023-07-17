@@ -2,7 +2,6 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
-import { ForgotPassword } from "./forgot-password.jsx";
 
 export const LoginAdmin = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +14,7 @@ export const LoginAdmin = () => {
   function sendData(e) {
     e.preventDefault();
     if (!email.startsWith("admin")) {
-      setError("Correo no permitido");
+      setError("Email is not permitted");
       return;
     }
     console.log("send Data");
@@ -70,9 +69,6 @@ export const LoginAdmin = () => {
             </button>
           </div>
         </form>
-      )}
-      {showForgotPassword && (
-        <ForgotPassword handleClose={() => setShowForgotPassword(false)} />
       )}
     </>
   );

@@ -28,6 +28,7 @@ export const FavoriteCities = () => {
 
   return (
     <>
+    <div className="ciudadesfavoritasporusuario">
       <h1 className="text-center mt-5">Your favorite cities</h1>
       {store.favorites.length === 0 ? (
         <h2 className="text-center mt-3">You don't have any cities</h2>
@@ -40,6 +41,7 @@ export const FavoriteCities = () => {
           </div>
         ))
       )}
+    </div>
     </>
   );
 };
