@@ -19,6 +19,7 @@ import { Footer } from "./component/footer";
 import { LoginAdmin } from "./component/loginadmin";
 import { Ciudades } from "./pages/ciudades";
 import { Country } from "./pages/country";
+import { AllFavoritesCities } from "./component/allfavoritescities";
 
 
 //create your first component

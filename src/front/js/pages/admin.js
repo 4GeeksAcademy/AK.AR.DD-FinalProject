@@ -17,11 +17,15 @@ export const Admin = () => {
 
   return (
     <div className="container">
-      <form className="row row-cols-lg-auto g-3 align-items-center mt-5">
+      <form className="row ">
         <div className="container barra">
           <h1 className="bestplace">
-            Welcome <span className="bestpalcespan">Dashboard</span>
+            Welcome to <span className="bestpalcespan">Dashboard</span>
           </h1>
+          <h1 className="bestplace">
+            Add country  <span className="bestpalcespan"> to dashboard</span>
+          </h1>
+
           <form className="row row-cols-lg-auto g-3 align-items-center">
             <div className="col-12">
               <label className="visually-hidden" htmlFor="inlineFormSelectPref">

@@ -138,7 +138,7 @@ export const Twocountry = () => {
           {/* <button className="btn more" onClick={() => handleClickCities(pais.country_name)}>
             Ciudades
           </button> */}
-          <Link className="btn more" to={"/country/"+pais.country_name}> Ciudades </Link>
+          <Link className="btn more" to={"/country/"+pais.country_name}> Cities </Link>
         </div>
       ))}
 

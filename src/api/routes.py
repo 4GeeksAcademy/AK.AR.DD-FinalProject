@@ -301,6 +301,29 @@ def add_favorite_city():
     finally:
         db.session.close()
 
+@api.route('/favorites/<int:city_id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorite_city(city_id):
+    current_user = get_jwt_identity()
+    user_id = User.query.filter_by(email=current_user).first().id
+
+    # Find the favorite entry to delete
+    favorite = Favorites.query.filter_by(user_id=user_id, city_id=city_id).first()
+
+    if not favorite:
+        return jsonify({"message": "Favorite not found"}), 404
+
+    try:
+        # Delete the favorite from the database
+        db.session.delete(favorite)
+        db.session.commit()
+        return jsonify({"message": "Favorite deleted successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Failed to delete favorite", "error": str(e)}), 500
+    finally:
+        db.session.close()
+
 @api.route('/favorites', methods=['GET'])
 @jwt_required()
 def get_favorite_cities():
@@ -311,6 +334,16 @@ def get_favorite_cities():
         return jsonify({"message": "User not found"}), 404
 
     favorites = Favorites.query.filter_by(user_id=user.id).all()
+    
+    if len(favorites) == 0:
+        return jsonify({"message": "Favorites not found"}), 404
+    
+    favorite_cities = list(map(lambda item: item.serialize(), favorites))
+    return jsonify(favorite_cities), 200
+
+@api.route('/allfavorites', methods=['GET'])
+def get_all_favorite_cities():
+    favorites = Favorites.query.all()
     
     if len(favorites) == 0:
         return jsonify({"message": "Favorites not found"}), 404
