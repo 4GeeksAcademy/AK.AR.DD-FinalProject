@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
-import { ForgotPassword } from "./forgot-password.jsx";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +13,7 @@ export const Login = () => {
   function sendData(e) {
     e.preventDefault();
     if (email.startsWith("admin")) {
-      setError("Correo no permitido");
+      setError("Email is not permitted");
       return;
     }
     console.log("send Data");
@@ -68,9 +67,6 @@ export const Login = () => {
             </button>
           </div>
           <div className="col-6 mt-3">
-            <Link to="#" onClick={handleForgotPasswordClick}>
-              Forgot your password?
-            </Link>
           </div>
           <div className="col-6 mt-3">
             <Link to="/loginadmin" onClick={handleForgotPasswordClick}>
@@ -78,9 +74,6 @@ export const Login = () => {
             </Link>
           </div>
         </form>
-      )}
-      {showForgotPassword && (
-        <ForgotPassword handleClose={() => setShowForgotPassword(false)} />
       )}
     </>
   );

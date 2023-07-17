@@ -25,6 +25,8 @@ export const Admin = () => {
           <h1 className="bestplace">
             Add country  <span className="bestpalcespan"> to dashboard</span>
           </h1>
+          <p>Steps to follow to add a country and cities to dashboard</p>
+          <p><strong>Step 1: Select a country that you wish to add below </strong></p>
 
           <form className="row row-cols-lg-auto g-3 align-items-center">
             <div className="col-12">

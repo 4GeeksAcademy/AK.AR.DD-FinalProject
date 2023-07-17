@@ -42,8 +42,8 @@ export const City = ({ selectedCountry, handleSaveCity }) => {
 
   return (
     <div className="container-fluid">
-      {cityNotFound && <div className="alert alert-danger">Ciudad no encontrada</div>}
-
+      {cityNotFound && <div className="alert alert-danger">City not found</div>}
+      <p><strong>Step 3: Write on the text area the city you would like to add and click on the "Search City" button</strong></p>
       <h4 htmlFor="formGroupExampleInput" className="form-label">
         City
       </h4>
@@ -60,7 +60,7 @@ export const City = ({ selectedCountry, handleSaveCity }) => {
         </div>
         <div className="col-2">
           <button type="button" className="btn btn-warning" onClick={handleSearchCity}>
-            Buscar ciudad
+            Search City
           </button>
         </div>
       </div>
@@ -109,6 +109,7 @@ export const City = ({ selectedCountry, handleSaveCity }) => {
         </button>
       </div>
 
+      <p><strong>Step 4: Click on the "Save City" button once you found the searched city and scroll to click on the "Save Changes" button</strong></p>
       <button
         type="button"
         className="btn btn-success"

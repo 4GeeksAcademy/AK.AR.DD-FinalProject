@@ -50,7 +50,7 @@ body{
   } */
  
   .card-title{
-    font-size: 5rem;
+    font-size: 4rem;
   }
  
   .twocountry:hover {
@@ -530,4 +530,17 @@ body{
 }
 .textcommentuser{
   border-radius: 1rem;
+}
+.footer {
+  background: #3949AB;
+  color: white;
+}
+.copyright {
+  margin-top: 4rem;
+}
+.ciudadesfavoritasporusuario img {
+  height: 30rem;
+  width: 65rem;
+  border-radius: 2rem;
+  margin-right: 5rem;
 }

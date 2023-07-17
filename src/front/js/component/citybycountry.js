@@ -15,7 +15,7 @@ export const CitybyCountry = ({ selectedCountry, countrySaved, addedCities }) =>
           <>
             {selectedCountryCities.map((city, index) => (
               <div key={index}>
-                <h5 className="datospais">Ciudad: <span className="resultpais">{city.name}</span></h5>
+                <h5 className="datospais">City: <span className="resultpais">{city.name}</span></h5>
                 {city.image_url && (
                   <div className="text-center mt-3">
                     <img src={city.image_url} alt={city.name} className="img-city" />
@@ -24,7 +24,7 @@ export const CitybyCountry = ({ selectedCountry, countrySaved, addedCities }) =>
               </div>
             ))}
             {addedCities.map((city, index) => (
-              <h5 key={index}>Ciudad Agregada: {city}</h5>
+              <h5 key={index}>Added City: {city}</h5>
             ))}
           </>
         )}
