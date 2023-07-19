@@ -1,9 +1,9 @@
 import React, { useState, useContext} from "react";
 import { Context } from "../store/appContext";
-import { Modal, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-export const Signup = ({ handleClose }) => {
+export const Signup = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,12 +17,12 @@ export const Signup = ({ handleClose }) => {
     console.log("send data");
     console.log(fullname, email, password, nationality, description);
     actions.signup(fullname, email, password, nationality, description);
-    handleClose();
-    navigate("/"); // Redirect to home after successful signup
+    navigate("/"); 
   }
 
   return (
     <form onSubmit={sendData}>
+    <div className="containerx mt-3">
       <div className="mb-3">
         <label htmlFor="fullname">Full name</label>
         <input
@@ -80,6 +80,8 @@ export const Signup = ({ handleClose }) => {
       <Button variant="primary" type="submit">
         Sign Up
       </Button>
+      </div>
     </form>
   );
 };
+

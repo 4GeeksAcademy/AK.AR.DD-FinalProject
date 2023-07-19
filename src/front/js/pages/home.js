@@ -1,73 +1,44 @@
-// import React, { useContext } from "react";
-// import { Context } from "../store/appContext";
-// import rigoImageUrl from "../../img/rigo-baby.jpg";
-// import { Twocountry } from "../component/twocountry";
-// import "../../styles/home.css";
-
-// export const Home = () => {
-// 	const { store, actions } = useContext(Context);
-
-// 	return (
-// 		<div className="text-center mt-5">
-// 			<h1>Hello Rigo!!</h1>
-// 			<p>
-// 				<img src={rigoImageUrl} />
-// 			</p>
-// 			<div className="alert alert-info">
-// 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-// 			</div>
-// 			<p>
-// 				This boilerplate comes with lots of documentation:{" "}
-// 				<a href="https://start.4geeksacademy.com/starters/react-flask">
-// 					Read documentation
-// 				</a>
-// 			</p>
-// 			<Twocountry/>
-// 		</div>
-// 	);
-// };
-
-
-// import React, { useContext, useEffect } from "react";
-// import { Context } from "../store/appContext";
-// import rigoImageUrl from "../../img/rigo-baby.jpg";
-// import { Twocountry } from "../component/twocountry";
-// import { CiudadxCountry } from "../component/ciudadxcountry";
-// import "../../styles/home.css";
-
-// export const Home = () => {
-//   const { store, actions } = useContext(Context);
-
-//   useEffect(() => {
-//     actions.loadCountries(); // Cargar países tan pronto como se cargue la página
-//   }, []);
-
-//   return (
-//     <div className="twocountry-container">
-//     <Twocountry/>
-//   </div>
-//   );
-// };
-
 
 import React, { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import { Twocountry } from "../component/twocountry";
 import { CiudadxCountry } from "../component/ciudadxcountry";
 import "../../styles/home.css";
+import { CitybyCountry } from "../component/citybycountry";
+import { FavoriteCities } from "../component/favoritecities";
+import { AllFavoritesCities } from "../component/allfavoritescities";
+import baner from "../../img/baner.jpg";
+import { Buscador } from "./buscador";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.loadCountries(); // Cargar países tan pronto como se cargue la página
+    actions.loadCountries();
+    console.log('prueba');
   }, []);
 
   return (
-    <div className="cartas">
-      <Twocountry className="twocountry-container" />
-    </div>
+    <>
+      <div className="mt-5">
+        <img className="baner" src={baner}/>
+        <div className="buscador-container">
+          <div className="buscador-content">
+            <Buscador />
+          </div>
+        </div>
+      </div>
+      <h1 className="bestplace">Countries <span className="bestpalcespan">to choose from</span></h1>
+      <div className="contenedorpais container">
+        <Twocountry className="twocountry" />
+      </div>
+      <h1 className="bestplace">Nomads' <span className="bestpalcespan">favorite cities</span></h1>
+      <div className="contenedorciudad container">
+        <AllFavoritesCities/>
+      </div>
+    </>
   );
 };
 

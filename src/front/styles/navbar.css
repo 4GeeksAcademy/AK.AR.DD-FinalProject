@@ -1,0 +1,38 @@
+
+.navbar {
+    background-color: #3949AB;
+    height: 13rem; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: height 0.3s ease; /* Agregamos una transición suave para la altura */
+  }
+  
+  .navbar.scrolled {
+    height: 10rem; /* Ajusta la altura al hacer scroll */
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar a:hover {
+    color: #FF4081;
+  }
+  
+  .logo {
+    width: 16rem;
+    height: auto;
+    transition: width 0.3s ease; /* Agregamos una transición suave para el ancho */
+  }
+  
+  .logo.scrolled {
+    width: 13rem; /* Ajusta el ancho al hacer scroll */
+  }
+  
+

@@ -1,8 +1,9 @@
+
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
 
-export const Login = () => {
+export const LoginAdmin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { actions, store } = useContext(Context);
@@ -12,14 +13,14 @@ export const Login = () => {
 
   function sendData(e) {
     e.preventDefault();
-    if (email.startsWith("admin")) {
+    if (!email.startsWith("admin")) {
       setError("Email is not permitted");
       return;
     }
     console.log("send Data");
     console.log(email, password);
     actions.login(email, password);
-    navigate("/");
+    navigate("/admin");
   }
 
   const handleForgotPasswordClick = () => {
@@ -29,14 +30,15 @@ export const Login = () => {
   return (
     <>
       {store.auth ? (
-        navigate("/")
+        navigate("/admin")
       ) : (
-        <form className="containerx mt-3" onSubmit={sendData}>
+        <form className="container login mt-3" onSubmit={sendData}>
           {error && (
             <div className="alert alert-danger" role="alert">
               {error}
             </div>
           )}
+          <h1 className="datospais">LOGIN ADMIN</h1>
           <div className="col-md-6">
             <label htmlFor="inputEmail4" className="form-label">
               Email
@@ -62,16 +64,9 @@ export const Login = () => {
             />
           </div>
           <div className="col-12">
-            <button type="submit" className="btn btn-primary mt-3">
+            <button type="submit" className="btn btn-loginx mt-3">
               Log In
             </button>
-          </div>
-          <div className="col-6 mt-3">
-          </div>
-          <div className="col-6 mt-3">
-            <Link to="/loginadmin" onClick={handleForgotPasswordClick}>
-              ADMIN
-            </Link>
           </div>
         </form>
       )}
